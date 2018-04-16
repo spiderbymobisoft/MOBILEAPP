@@ -1,0 +1,8 @@
+{
+  "name": "spider-bymobisoft",
+  "app_id": "46038618",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

@@ -1,0 +1,31 @@
+page-street-photo {
+    .firstPost {
+        margin-top: 80px;
+        box-shadow: none;
+        border-radius: 0px;
+        background: rgba(245, 245, 245, 0.74);
+        padding-bottom: 10px;
+    }
+    .firstPost p {
+        padding: 3px 3px;
+        color: rgb(0, 0, 0);
+    }
+    .posts {
+        box-shadow: none;
+        border-radius: 8px;
+        border: 1px solid rgb(185, 185, 185);
+        background: rgba(0, 0, 0, 0.74);
+        padding-bottom: 10px;
+    }
+    .posts p {
+        padding: 3px 3px;
+        color: rgb(0, 0, 0);
+    }
+    .postTrans {
+        background: transparent;
+    }
+    .postName {
+        color: rgb(0, 0, 0);
+        font-weight: bold;
+    }
+}

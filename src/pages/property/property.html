@@ -1,0 +1,156 @@
+<ion-header>
+  <ion-navbar color="white" no-border-bottom>
+    <ion-title>{{ propertyRecord.property.house_number }}, {{ propertyRecord.property.street_name }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openMenuOption()">
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-row class="wrapper-sm">
+    <ion-col col-auto>
+      <ion-avatar item-start>
+        <img class="thumb-sm" src="assets/icon/property.svg">
+      </ion-avatar>
+    </ion-col>
+    <ion-col class="text-ellipsis-flex">
+      <div class="l-h">
+        <div class="font-bold text-ellipsis">{{ propertyRecord.property.house_number }}</div>
+        <div class="text-sm">{{ propertyRecord.property.street_name }}</div>
+        <div class="text-sm">{{ propertyRecord.property.lga }}, {{ propertyRecord.property.state }}</div>
+        <div class="text-sm text-black text-ellipsis">{{ propertyRecord.property.country }}</div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content class="bg-white">
+
+  <div class="m-t-sm bg-white">
+    <div class="post-caption padder m-b-sm pos-rlt l-h">
+      <p>
+        <span class="font-bold"> Published </span>{{ propertyRecord.created | amTimeAgo }}
+      </p>
+      <hr/>
+      <p>
+        <span class="font-bold"> Entities: </span>{{ propertyRecord.entities ? propertyRecord.entities : 0 }}
+      </p>
+      <p>
+        <span class="font-bold"> Is Property Accessible? </span>{{ propertyRecord.property.accessible ? 'Yes' : 'No' }}
+      </p>
+      <hr/>
+      <p>
+        <span class="font-bold"> GPS Location: </span>{{ propertyRecord.location ? propertyRecord.location.coordinates[0] + ', ' + propertyRecord.location.coordinates[1]
+        : 'Not Available' }}
+      </p>
+
+      <p *ngIf="propertyRecord.location.whatthreewords">
+        <span class="font-bold"> W3W: </span>{{ propertyRecord.location ? propertyRecord.location.whatthreewords : 'Not Available' }}
+      </p>
+      <hr/>
+
+      <p>
+        <span class="font-bold">Building Serial Number: </span> {{ propertyRecord.property.building_serial_number ? propertyRecord.property.building_serial_number : 'Not available' }}
+      </p>
+      <div *ngIf="propertyRecord.contact">
+        <hr/>
+        <p>
+          <span class="font-bold">Contact Person: </span> {{ propertyRecord.contact.contact_person }}
+        </p>
+
+        <p>
+          <span class="font-bold">Contact Email: </span> {{ propertyRecord.contact.email }}
+        </p>
+
+        <p>
+          <span class="font-bold">Contact Telephone: </span> {{ propertyRecord.contact.telephone }}
+        </p>
+
+      </div>
+      <div class="text-xxs text-black" *ngIf="propertyRecord.property.building_part_occupied">
+        <ion-icon name="home"></ion-icon>
+        {{ propertyRecord.property.building_part_occupied }}
+      </div>
+
+      <div *ngIf="propertyRecord.property.site_conditions > 0">
+        <hr/>
+        <p class="font-bold">Site Conditions</p>
+        <ul>
+          <li *ngFor="let sc of propertyRecord.property.site_conditions">
+            {{ sc }}
+          </li>
+        </ul>
+      </div>
+
+      <hr/>
+
+      <p>
+        <span class="font-bold">Property Type: </span>{{ propertyRecord.property.property_type }}
+      </p>
+      <p>
+        <span class="font-bold">Storey Building: </span>{{ propertyRecord.property.storey_building ? 'Yes' : 'No' }}
+      </p>
+      <p *ngIf="propertyRecord.property.storey_building">
+        <span class="font-bold">Storey Building Floors: </span>{{ propertyRecord.property.storey_building_floors ? propertyRecord.property.storey_building_floors
+        : 'Not specified' }}
+      </p>
+      <hr/>
+      <p>
+        <span class="font-bold">Refuse Disposal: </span> {{ propertyRecord.property.refuse_disposal }}
+      </p>
+      <p>
+        <span class="font-bold">Has Signage: </span>{{ propertyRecord.property.has_signage ? 'Yes' : 'No' }}
+      </p>
+      <p>
+        <span class="font-bold">Gate House: </span>{{ propertyRecord.property.gate_house }}
+      </p>
+      <p>
+        <span class="font-bold">Generator House: </span>{{ propertyRecord.property.generator_house }}
+      </p>
+      <p>
+        <span class="font-bold">Boy's Quarter: </span>{{ propertyRecord.property.boys_quarter }}
+      </p>
+
+      <hr/>
+
+      <div *ngIf="propertyRecord.property.water_supply.length > 0">
+        <p class="font-bold">Water Supply</p>
+        <ul>
+          <li *ngFor="let ws of propertyRecord.property.water_supply">
+            {{ ws }}
+          </li>
+        </ul>
+      </div>
+      <hr/>
+    </div>
+  </div>
+
+  <div *ngIf="propertyRecord.property_photos.length > 0">
+    <ion-card *ngFor="let photo of propertyRecord.property_photos">
+      <img src="{{ photo.url ? photo.url : 'assets/icon/street.svg' }}" />
+      <ion-card-content>
+        <ion-card-title>
+          {{ photo.title }}
+        </ion-card-title>
+        <div class="m-t-sm m-b-sm">
+          <div>
+            <ion-icon name="ios-camera-outline" color="primary"></ion-icon>
+            {{ photo.snapshot_position ? photo.snapshot_position : 'Not Available' }}
+          </div>
+          <div>
+            <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
+            {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
+          </div>
+          <div *ngIf="photo.location.whatthreewords">
+            <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <div class="padder m-t-lg m-b-lg">
+      <button class="rounded" [disabled]="loading" ion-button block color="secondary" (click)="openPropertyEntityPage()">
+        <b>View Entity List</b>
+      </button>
+    </div>
+  </div>
+</ion-content>

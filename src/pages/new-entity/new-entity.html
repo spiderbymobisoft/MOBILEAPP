@@ -1,0 +1,102 @@
+<ion-header>
+
+  <ion-navbar color="white" no-border-bottom>
+    <ion-title>Add New Entity</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="bg-white m-b-sm">
+    <div class="m-t-sm bg-white">
+
+      <ion-item>
+        <ion-label floating>Entity Name</ion-label>
+        <ion-input [(ngModel)]="payload.entity.entity_name" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Entity Group</ion-label>
+        <ion-select #eg (ionChange)="loadCategory(eg.value)" [(ngModel)]="payload.entity.entity_group" multiple="false">
+          <ion-option *ngFor="let data of formConfig.entityGroup" value="{{ data.title }}">{{ data.title }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="entityGroup.length > 0">
+        <ion-label floating>Entity Category</ion-label>
+        <ion-select [(ngModel)]="payload.entity.entity_category" multiple="false">
+          <ion-option *ngFor="let data of entityGroup" value="{{ data.title }}">{{ data.title }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Contact Person</ion-label>
+        <ion-input [(ngModel)]="payload.contact.contact_person" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input [(ngModel)]="payload.contact.email" type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Telephone</ion-label>
+        <ion-input [(ngModel)]="payload.contact.telephone" type="tel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Meter Available</ion-label>
+        <ion-select [(ngModel)]="payload.entity.meter_available" multiple="false">
+          <ion-option value="true">Yes</ion-option>
+          <ion-option value="false">No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Meter Condition</ion-label>
+        <ion-select [(ngModel)]="payload.entity.meter_condition" multiple="false">
+          <ion-option *ngFor="let data of formConfig.meterCondition" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Meter Phases</ion-label>
+        <ion-select [(ngModel)]="payload.entity.meter_phases" multiple="false">
+          <ion-option *ngFor="let data of formConfig.meterPhases" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Meter Type</ion-label>
+        <ion-select [(ngModel)]="payload.entity.meter_type" multiple="true">
+          <ion-option *ngFor="let data of formConfig.meterType" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Meter Number</ion-label>
+        <ion-input [(ngModel)]="payload.entity.meter_number" type="text" name="meterNumber" id="meterNumber"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Number of Boy's Quarter(s)</ion-label>
+        <ion-input [(ngModel)]="payload.entity.boys_quarter" type="number" name="bq" id="bq"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Has Signage</ion-label>
+        <ion-select [(ngModel)]="payload.entity.has_signage" multiple="false">
+          <ion-option value="true">Yes</ion-option>
+          <ion-option value="false">No</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </div>
+  </div>
+</ion-content>

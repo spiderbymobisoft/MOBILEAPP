@@ -1,0 +1,99 @@
+<ion-header>
+
+  <ion-navbar color="white" no-border-bottom>
+    <ion-title>Add New Street</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="bg-white m-b-sm">
+    <div class="m-t-sm bg-white">
+
+      <ion-item>
+        <ion-label floating>GIS ID</ion-label>
+        <ion-input [(ngModel)]="payload.street.gis_id" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Street Name</ion-label>
+        <ion-input [(ngModel)]="payload.street.street_name" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Area</ion-label>
+        <ion-input [(ngModel)]="payload.street.area" type="text" name="name" id="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Location</ion-label>
+        <ion-input [(ngModel)]="payload.street.location" type="text" name="location" id="location"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>State</ion-label>
+        <ion-select #ns (ionChange)="loadCity(ns.value)" [(ngModel)]="payload.street.state" name="state" id="state">
+          <ion-option *ngFor="let state of nigeriaStates" [value]="state">{{ state }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="stateCities.length > 0">
+        <ion-label>City/LGA</ion-label>
+        <ion-select [(ngModel)]="payload.street.lga" name="lga" id="lga">
+          <ion-option *ngFor="let city of stateCities" [value]="city.name">{{ city.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Street Furniture</ion-label>
+        <ion-select [(ngModel)]="payload.street.street_furniture" multiple="true">
+          <ion-option *ngFor="let data of formConfig.streetFurniture" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Road Type</ion-label>
+        <ion-select [(ngModel)]="payload.street.road_type" multiple="false">
+          <ion-option *ngFor="let data of formConfig.roadType" value="{{ data }}">{{ data }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Road Condition</ion-label>
+        <ion-select [(ngModel)]="payload.street.road_condition" multiple="false">
+          <ion-option *ngFor="let data of formConfig.roadCondition" value="{{ data }}">{{ data }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Road Carriage</ion-label>
+        <ion-select [(ngModel)]="payload.street.road_carriage" multiple="false">
+          <ion-option *ngFor="let data of formConfig.roadCarriage" value="{{ data }}">{{ data }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Road Feature</ion-label>
+        <ion-select [(ngModel)]="payload.street.road_feature" multiple="true">
+          <ion-option *ngFor="let data of formConfig.roadFeature" value="{{ data }}">{{ data }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Drainage</ion-label>
+        <ion-select [(ngModel)]="payload.street.drainage" multiple="false">
+          <ion-option *ngFor="let data of formConfig.drainage" value="{{ data }}">{{ data }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Refuse Disposal</ion-label>
+        <ion-select [(ngModel)]="payload.street.refuse_disposal" multiple="false">
+          <ion-option *ngFor="let data of formConfig.refuseDisposal" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Electricity</ion-label>
+        <ion-select [(ngModel)]="payload.street.electricity" multiple="false">
+          <ion-option *ngFor="let data of formConfig.electricity" value="{{ data }}">{{ data }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

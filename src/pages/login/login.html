@@ -1,0 +1,32 @@
+<ion-content padding>
+  <div class="text-center logo-area">
+    <img src="assets/icon/logo.png" class="logo" alt="SPiDER">
+  </div>
+  <div class="text-center">
+    <span class="text-2x font-bold">SPiDER</span>
+    <br>
+    <span class="font-thin">
+      by Mobisoft
+    </span>
+  </div>
+  
+    <ion-item>
+      <ion-input type="email" [(ngModel)]="login.email" placeholder="Email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" [(ngModel)]="login.password" placeholder="Password"></ion-input>
+    </ion-item>
+    
+
+  <div class="padder m-t-lg">
+    <button class="rounded" [disabled]="loading" ion-button block color="secondary" (click)="doLogin()">
+      <b>{{loginText}}</b>
+      <ion-spinner color="white" *ngIf="loading"></ion-spinner>
+    </button>
+  </div>
+  <ion-item no-lines class="transparent">
+      <ion-toggle name="remembrance" id="remembrance" [(ngModel)]="remembrance" checked="{{ remembrance}}"></ion-toggle>
+      <ion-label>Remember me on this device</ion-label>
+    </ion-item>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color="white" no-border-bottom>
+    <ion-title>Add Street Photo</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="bg-white m-b-sm">
+    <div class="m-t-sm bg-white">
+      <ion-item>
+        <ion-label floating>Photo Description</ion-label>
+        <ion-input [(ngModel)]="payload.title" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Street Position</ion-label>
+        <ion-select [(ngModel)]="payload.snapshot_position" name="street_position" id="street_position">
+          <ion-option value="Start of Street">Start of Street</ion-option>
+          <ion-option value="Middle of Street">Middle of Street</ion-option>
+          <ion-option value="End of Street">End of Street</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-card *ngIf="payload.photo" class="posts">
+        <img src="{{ payload.photo ? payload.photo : 'assets/icon/street.svg' }}" width="100%" />
+        <ion-card-content>
+          <p>
+            {{ payload.title }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <ion-fab bottom center>
+    <button color="secondary" (click)="openCamera()" ion-fab>
+      <ion-icon name="camera"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

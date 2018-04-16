@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="white" no-border-bottom>
+    <ion-title class="iontitle">Password Update</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="save()">
+          <ion-icon *ngIf="!loading" ios="ios-checkmark" md="md-checkmark"></ion-icon>
+          <ion-spinner color="secondary" *ngIf="loading"></ion-spinner>
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="bg-white m-b-sm">
+    <div class="m-t-sm bg-white">
+      <ion-item>
+        <ion-label floating>New password</ion-label>
+        <ion-input [(ngModel)]="payload.password" type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Confirm password</ion-label>
+          <ion-input [(ngModel)]="payload.confirm" type="password"></ion-input>
+        </ion-item>
+    </div>
+  </div>
+</ion-content>

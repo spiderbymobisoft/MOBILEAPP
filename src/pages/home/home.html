@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="white" no-border-bottom>
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons end>
+      <button color="danger" ion-button icon-only (click)="logOut()">
+        <ion-icon name="power"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-white">
+  <ion-row text-center>
+    <ion-col (click)="openThis(menu)" col-12 *ngFor="let menu of menuItems" class="b-r b-b b-light">
+      <div class="wrapper-sm pos-rlt">
+        <!--  <ion-icon name="md-create" class="pos-abt top right"></ion-icon> -->
+        <div class="text-center">
+          <img src="{{ menu.img }}" class="img-svg" alt="">
+        </div>
+        <div class="l-h m-b-sm">
+          <div class="font-bold">{{ menu.title }}</div>
+          <div class="text-sm text-muted">{{ menu.description }}</div>
+          <div>
+            <button ion-button outline primary small>
+              <ion-icon name="arrow-round-forward"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-content>

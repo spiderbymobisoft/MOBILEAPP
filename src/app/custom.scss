@@ -1,0 +1,214 @@
+.logo-area {
+  margin-top: 10%;
+  margin-bottom: 30px;
+  .logo {
+    height: 80px !important;
+  }
+}
+
+.rounded {
+  border-radius: 90px;
+}
+
+
+.rounded-card {
+  border-radius: 10px;
+  border: 1px solid #dbd9d9;
+}
+.transparent {
+  background: transparent !important;
+  border: none;
+}
+
+.form-card {
+  border: 0px solid #fff;
+}
+
+.big-title{
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.medium-title {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.small-title {
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.round-button {
+  border-radius: 90px;
+}
+
+.pill-primary {
+  border: 1px solid rgb(207, 255, 162);
+  border-radius: 90px;
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 5px;
+}
+
+.pill-primary-full {
+  border: 1px solid rgb(207, 255, 162);
+  border-radius: 90px;
+  padding: 5px 5 5px 5px;
+  margin-bottom: 5px;
+  background-color: rgb(207, 255, 162);
+  color: #fff;
+  height: 10px !important;
+  width: 10px !important;
+  text-align: center;
+  align-self: center;
+}
+
+.pill-grey {
+  border: 1px solid #a7a7a7;
+  border-radius: 90px;
+  padding: 1px 5px 1px 5px;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  margin-right: 5px;
+}
+
+.m-l-5 {
+  margin-left: 5px;
+}
+
+.img-svg {
+  height: 80px !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-primary {
+  color: rgb(82, 158, 5);
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-italics {
+  font-style: italic;
+}
+
+.iontitle{
+  font-weight: 300 !important;
+}
+
+.text-thin {
+  font-weight: 300 !important;
+}
+
+.b_b_transparent {
+  border: none;
+}
+
+.my-tabs .tabbar {
+  background-color: rgb(207, 255, 162);
+  color: #FFF;
+}
+
+.my-toolbar {
+  .toolbar-background {
+    background-color: #fff;
+    border-color: transparent;
+  }
+  ion-scroll {
+    height: 42px;
+    white-space: nowrap;
+    ion-segment {
+      width: 420px;
+    }
+  }
+  ion-segment {
+    .segment-button:not(.segment-activated) {
+      color: color($colors, muted)
+    }
+  }
+}
+
+.bg-gradient {
+  background-image: -webkit-gradient(linear, right bottom, left bottom, color-stop(0, rgb(253, 255, 254)), color-stop(1, rgb(207, 255, 162)));
+  background-image: -o-linear-gradient(left, rgb(253, 255, 254) 0%, rgb(195, 255, 230) 100%);
+  background-image: -moz-linear-gradient(left, rgb(253, 255, 254) 0%, rgb(207, 255, 162) 100%);
+  background-image: -webkit-linear-gradient(left, rgb(253, 255, 254) 0%, rgb(207, 255, 162) 100%);
+  background-image: -ms-linear-gradient(left, rgb(253, 255, 254) 0%, rgb(207, 255, 162) 100%);
+  background-image: linear-gradient(to left, rgb(253, 255, 254) 0%, rgb(207, 255, 162) 100%);
+}
+
+.modal-gradient {
+  ion-content, .toolbar-background {
+    @extend .bg-gradient;
+  }
+}
+
+.form-login {
+  margin: 16px;
+  width: calc(100% - 32px);
+}
+
+.avatar-more {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  line-height: 40px;
+  font-size: 24px;
+  border: 1px solid #bbb;
+  text-align: center;
+}
+
+.user-label {
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  color: color($colors, primary);
+  background-color: rgba(color($colors, primary), .2);
+}
+
+/* https://stackoverflow.com/a/38786672/1186752 */
+.input-cover {
+  position: static;
+}
+
+.content-noscroll .scroll-content {
+  overflow: hidden;
+}
+
+.scroll-y {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.button-fab {
+  position: fixed;
+  z-index: 100;
+  bottom: 64px;
+  right: 12px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.35), 5px 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.has-fab-bottom {
+  margin-bottom: 72px;
+}
+
+.thumb-xxxs {
+  width: 20px;
+  display: inline-block;
+}
