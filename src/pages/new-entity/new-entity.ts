@@ -13,6 +13,7 @@ import { EntityPhotoPage } from '../entity-photo/entity-photo';
 })
 export class NewEntityPage {
   public payload: any = {
+    document_owner: '',
     property_id: '',
     entity: {
       entity_id: '',
@@ -80,6 +81,7 @@ export class NewEntityPage {
 
   processSave() {
     this.ss.presentLoading();
+    this.payload.document_owner = this.user.document_owner ? this.user.document_owner : this.user._id;
     this.payload.enumerator = {
       id: this.user._id,
       firstname: this.user.personal.firstname,

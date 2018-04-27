@@ -46,10 +46,10 @@ export class OfflinePage {
 
   ionViewDidLoad() {
     this.dataInit();
-    this.offlineDataInit();
   }
 
   ionViewWillEnter() {
+    this.offlineDataInit();
   }
 
   offlineDataInit() {
@@ -61,18 +61,21 @@ export class OfflinePage {
     this.property_photos = this.store.GET_PHOTOS('__property_photos__');
     this.entity_photos = this.store.GET_PHOTOS('__entity_photos__');
 
-    this.stats = {
-      data: {
-        streets: this.streets.length,
-        properties: this.properties.length,
-        entities: this.entities.length
-      },
-      photo: {
-        streets: this.street_photos.length,
-        properties: this.property_photos.length,
-        entities: this.entity_photos.length
+    setTimeout(() => {
+      this.stats = {
+        data: {
+          streets: this.streets.length,
+          properties: this.properties.length,
+          entities: this.entities.length
+        },
+        photo: {
+          streets: this.street_photos.length,
+          properties: this.property_photos.length,
+          entities: this.entity_photos.length
+        }
       }
-    }
+    }, 300);
+
   }
 
   dataInit() {
@@ -172,7 +175,7 @@ export class OfflinePage {
   }
 
   processStreets(payload) {
-    
+
     return new Promise(resolve => {
       if (payload.length > 0) {
         payload.forEach(data => {
@@ -193,7 +196,7 @@ export class OfflinePage {
   }
 
   processStreetPhotos(payload) {
-    
+
     return new Promise(resolve => {
       if (payload.length > 0) {
         payload.forEach(data => {
@@ -214,7 +217,7 @@ export class OfflinePage {
   }
 
   processProperties(payload) {
-    
+
     return new Promise(resolve => {
       if (payload.length > 0) {
         payload.forEach(data => {
@@ -235,7 +238,7 @@ export class OfflinePage {
   }
 
   processPropertyPhotos(payload) {
-    
+
     return new Promise(resolve => {
       if (payload.length > 0) {
         payload.forEach(data => {
@@ -256,7 +259,7 @@ export class OfflinePage {
   }
 
   processEntities(payload) {
-    
+
     return new Promise(resolve => {
       if (payload.length > 0) {
         payload.forEach(data => {
@@ -277,7 +280,7 @@ export class OfflinePage {
   }
 
   processEntityPhotos(payload) {
-    
+
     return new Promise(resolve => {
       if (payload.length > 0) {
         payload.forEach(data => {

@@ -14,6 +14,7 @@ import { PropertyPhotoPage } from '../property-photo/property-photo';
 export class NewPropertyPage {
 
   public payload: any = {
+    document_owner: '',
     property: {
       property_id: '',
       street_id: '',
@@ -93,6 +94,7 @@ export class NewPropertyPage {
   processSave() {
     this.ss.presentLoading();
     this.payload.property.property_id = this.ss.GENERATE_PROPERTY_ID();
+    this.payload.document_owner = this.user.document_owner ? this.user.document_owner : this.user._id;
     this.payload.enumerator = {
       id: this.user._id,
       firstname: this.user.personal.firstname,
