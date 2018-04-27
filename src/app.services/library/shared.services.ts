@@ -30,7 +30,7 @@ export class SharedServices {
         type: type,
         allowEscapeKey: false,
         allowOutsideClick: false,
-        confirmButtonColor: '#0A9F62',
+        confirmButtonColor: '#0871FA',
         confirmButtonClass: 'btn btn-md btn-primary'
       }
     );
@@ -69,7 +69,25 @@ export class SharedServices {
 
   GENERATE_BUILDING_SERIAL_NUMBER(){
     const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    var text='SID-';
+    var text='BSN-';
+    var len = 12;
+    for( var i=0; i < len; i++ )
+        text += charset.charAt(Math.floor(Math.random() * charset.length));
+    return text;
+  }
+
+  GENERATE_GIS_ID(){
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var text='GIS-';
+    var len = 12;
+    for( var i=0; i < len; i++ )
+        text += charset.charAt(Math.floor(Math.random() * charset.length));
+    return text;
+  }
+
+  GENERATE_ENTITY_ID(){
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var text='EID-';
     var len = 12;
     for( var i=0; i < len; i++ )
         text += charset.charAt(Math.floor(Math.random() * charset.length));

@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar color="white" no-border-bottom>
+  <ion-navbar color="primary" no-border-bottom>
     <ion-title>Add New Street</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="save()">
@@ -18,7 +18,7 @@
 
       <ion-item>
         <ion-label floating>GIS ID</ion-label>
-        <ion-input [(ngModel)]="payload.street.gis_id" type="text"></ion-input>
+        <ion-input [(ngModel)]="payload.street.gis_id" type="text" readonly></ion-input>
       </ion-item>
 
       <ion-item>

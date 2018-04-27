@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { UpdateService } from '../../app.services/http/crud/update.services';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { SharedServices } from '../../app.services/library/shared.services';
+import { Store } from '../../app.services/store/data.store';
 
 @IonicPage()
 @Component({
@@ -25,7 +25,7 @@ export class PropertyPhotoPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private us: UpdateService, private ss: SharedServices, private geolocation: Geolocation,
+    private store: Store, private ss: SharedServices, private geolocation: Geolocation,
     private camera: Camera) {
     this.payload.property_id = this.navParams.get('data');
   }
@@ -64,9 +64,9 @@ export class PropertyPhotoPage {
       this.geolocation.getCurrentPosition({ timeout: 30000, enableHighAccuracy: true }).then((position) => {
         this.ss.toast('Location captured', 2000);
         this.payload.location.coordinates = [position.coords.longitude, position.coords.latitude];
-        this.us.uploadPropertyPhoto(this.payload).subscribe(data => {
-          if (data.success) {
-            this.ss.toast('Property photo uploaded succesfully. You can upload another photo or go back.', 3000);
+        this.store.UPDATE_PHOTOS('__property_photos__',this.payload).then(feedback => {
+          if (feedback) {
+            this.ss.toast('Property photo stored succesfully. You can upload another photo or go back.', 3000);
             this.payload.title = '';
             this.payload.photo = '';
             this.payload.snapshot_position = '';
@@ -74,11 +74,11 @@ export class PropertyPhotoPage {
           }
           else {
             this.ss.dismissLoading();
-            this.ss.toast('Server error. Unable to upload this photo. please try again.', 2000);
+            this.ss.toast('Storage error. Unable to store this photo. please try again.', 2000);
           }
         }, err => {
           this.ss.dismissLoading();
-          this.ss.toast('Server error. Unable to upload this photo. Please try again.', 2000);
+          this.ss.toast('Storage error. Unable to store this photo. Please try again.', 2000);
         });
       }).catch(err => {
         this.ss.dismissLoading();

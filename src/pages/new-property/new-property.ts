@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { CreateService } from '../../app.services/http/crud/create.services';
 import { Store } from '../../app.services/store/data.store';
 import { SharedServices } from '../../app.services/library/shared.services';
 import { FormConfig } from '../../app.services/store/form.config';
@@ -49,6 +48,7 @@ export class NewPropertyPage {
       coordinates: [],
       whatthreewords: ''
     },
+    property_photos: [],
     enumerator: {
       id: '',
       firstname: '',
@@ -63,8 +63,7 @@ export class NewPropertyPage {
   private user: any;
   private streetData: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formConfig: FormConfig,
-    private cs: CreateService, private store: Store, private ss: SharedServices,
-    private geolocation: Geolocation) {
+    private store: Store, private ss: SharedServices, private geolocation: Geolocation) {
     this.streetData = navParams.get('data');
     this.dataInit();
   }
@@ -107,20 +106,20 @@ export class NewPropertyPage {
     this.geolocation.getCurrentPosition({ timeout: 30000, enableHighAccuracy: true }).then((position) => {
       this.ss.toast('Location captured', 2000);
       this.payload.location.coordinates = [position.coords.longitude, position.coords.latitude];
-      this.cs.addNewProperty(this.payload).then(payload => {
-        if (payload['success']) {
+      this.store.UPDATE_RECORD('__properties__',this.payload).then(feedback => {
+        if (feedback) {
           this.ss.dismissLoading();
-          this.ss.swalAlert('Data Service', 'Record added successfully. <br><b>Next</b>: Add property photo', 'success');
+          this.ss.swalAlert('Data Service', 'Record stored successfully. <br><b>Next</b>: Add property photo', 'success');
           this.navCtrl.pop().then(() => {
             this.navCtrl.push(PropertyPhotoPage, { data: this.payload.property.property_id });
           });
         } else {
           this.ss.dismissLoading();
-          this.ss.swalAlert('Data Service', 'Network connection error! Please try again.', 'error');
+          this.ss.swalAlert('Data Service', 'Storage error! Please try again.', 'error');
         }
       }).catch(err => {
         this.ss.dismissLoading();
-        this.ss.swalAlert('Data Service', 'Network connection error! Please try again.', 'error');
+        this.ss.swalAlert('Data Service', 'Storage error! Please try again.', 'error');
       });
     }).catch(err => {
       this.ss.dismissLoading();

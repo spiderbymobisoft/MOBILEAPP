@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="white" no-border-bottom>
+  <ion-navbar color="primary" no-border-bottom>
     <ion-title>{{ entityRecord.entity.entity_name }}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="openMenuOption()">
@@ -36,7 +36,7 @@
         <span class="font-bold"> GPS Location: </span>{{ entityRecord.location ? entityRecord.location.coordinates[0] + ', ' + entityRecord.location.coordinates[1]
         : 'Not Available' }}
       </p>
-      
+
       <p *ngIf="entityRecord.location.whatthreewords">
         <span class="font-bold"> W3W: </span>{{ entityRecord.location ? entityRecord.location.whatthreewords : 'Not Available' }}
       </p>
@@ -57,7 +57,7 @@
       </div>
       <hr/>
       <p>
-        <span class="font-bold">Meter Available: </span> {{ entityRecord.entity.meter_available ? 'Yes' : 'No'  }}</p>
+        <span class="font-bold">Meter Available: </span> {{ entityRecord.entity.meter_available ? 'Yes' : 'No' }}</p>
       <p>
         <span class="font-bold">Meter Condition: </span>{{ entityRecord.entity.meter_condition }}</p>
       <p>
@@ -70,6 +70,31 @@
       <p>
         <span class="font-bold">Boy's Quarter: </span>{{ entityRecord.entity.boys_quarter }}</p>
       <hr/>
+    </div>
+  </div>
+  <div *ngIf="sender == 'offline'">
+    <div *ngIf="offlinePhotos.length > 0">
+      <ion-card *ngFor="let photo of offlinePhotos">
+        <img src="{{ photo.photo }}" />
+        <ion-card-content>
+          <ion-card-title>
+            {{ photo.title }}
+          </ion-card-title>
+          <div class="m-t-sm m-b-sm">
+            <div>
+              <ion-icon name="ios-camera-outline" color="primary"></ion-icon>
+              {{ photo.snapshot_position ? photo.snapshot_position : 'Not Available' }}
+            </div>
+            <div>
+              <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
+              {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
+            </div>
+            <div>
+              <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </div>
   </div>
 
@@ -89,11 +114,12 @@
             <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
             {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
           </div>
-          <div>
+          <div *ngIf="photo.location.whatthreewords">
             <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
           </div>
         </div>
       </ion-card-content>
     </ion-card>
   </div>
+
 </ion-content>

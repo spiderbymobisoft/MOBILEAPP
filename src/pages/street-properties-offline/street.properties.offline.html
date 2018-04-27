@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-navbar color="primary" no-border-bottom>
+      <ion-title>Property Records (Offline)</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content class="bg-white">
+    <div class="m-b-sm">
+  
+      <div padding style="text-align: center; margin-top: 60px" *ngIf="propertyRecords.length === 0 && isBlankPost === 0">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+  
+      <div *ngIf="propertyRecords.length === 0 && isBlankPost === 1" class="text-center m-t-lg" padding>
+        <div>
+          <img src="assets/icon/property.svg" class="img-svg" alt="Street">
+        </div>
+        <div class="m-t-lg">
+          <h3 class="text-thin">No property record at the moment.</h3>
+        </div>
+      </div>
+      <div *ngIf="propertyRecords.length > 0">
+  
+        <ion-row (click)="showThisRecord(data)" class="wrapper-sm b-b b-light" *ngFor="let data of propertyRecords">
+          <ion-col col-auto>
+            <ion-avatar item-start>
+              <img class="thumb-sm" src="assets/icon/property.svg">
+            </ion-avatar>
+          </ion-col>
+          <ion-col class="text-ellipsis-flex">
+            <div class="l-h">
+              <div class="{{ 'font-bold' }}">{{data.property.house_number}}, {{ data.property.street_name }}</div>
+              <div class="text-sm text-black text-ellipsis">{{ data.property.site_condition }}, {{ data.property.building_type }}</div>
+              <div class="text-xxs text-black">
+                <ion-icon name="ios-pin-outline"></ion-icon>
+                {{ data.property.lga }}, {{ data.property.state }}
+              </div>
+            </div>
+          </ion-col>
+          <ion-col text-right col-auto>
+            <div class="span text-xs text-muted m-t-xs">{{ data.entities ? data.entities : 0 }} {{ data.entities > 1 ? 'entities' : 'entity' }}</div>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </ion-content>
+  

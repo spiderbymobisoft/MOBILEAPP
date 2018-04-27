@@ -26,10 +26,10 @@ export class PropertiesPage {
   }
 
   ionViewDidLoad() {
+    this.dataInit();
   }
 
   ionViewWillEnter() {
-    this.dataInit();
   }
 
   dataInit() {
@@ -157,6 +157,6 @@ export class PropertiesPage {
   }
 
   showThisRecord(propertyRecord){
-    this.navCtrl.push(PropertyPage, {data: propertyRecord})
+    this.navCtrl.push(PropertyPage, {data: propertyRecord, sender: 'online'});
   }
 }

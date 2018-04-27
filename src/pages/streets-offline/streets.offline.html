@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-title>Street Records (Offline)</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="add()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="bg-white">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="m-b-sm">
+
+    <div padding style="text-align: center; margin-top: 60px" *ngIf="streetRecords.length === 0 && isBlankPost === 0">
+      <ion-spinner color="primary"></ion-spinner>
+    </div>
+
+    <div *ngIf="streetRecords.length === 0 && isBlankPost === 1" class="text-center m-t-lg" padding>
+      <div>
+        <img src="assets/icon/street.svg" class="img-svg" alt="Street">
+      </div>
+      <div class="m-t-lg">
+        <h3 class="text-thin">No street record at the moment.</h3>
+      </div>
+    </div>
+    <div *ngIf="streetRecords.length > 0">
+      <ion-row (click)="showThisRecord(data)" class="wrapper-sm b-b b-light" *ngFor="let data of streetRecords">
+        <ion-col col-auto>
+          <ion-avatar item-start>
+            <img class="thumb-sm" src="assets/icon/street.svg">
+          </ion-avatar>
+        </ion-col>
+        <ion-col class="text-ellipsis-flex">
+          <div class="l-h">
+            <div class="{{ 'font-bold' }}">{{data.street.street_name}}</div>
+            <div class="text-sm text-black text-ellipsis">{{ data.street.area }}, {{ data.street.location }}</div>
+            <div class="text-xxs text-black">
+              <ion-icon name="ios-pin-outline"></ion-icon>
+              {{ data.street.lga }}, {{ data.street.state }}
+            </div>
+          </div>
+        </ion-col>
+        <ion-col text-right col-auto>
+          <div class="span text-xs text-muted m-t-xs">{{ data.street_photos ? data.street_photos.length : 0 }} {{ data.street_photos ? data.street_photos.length > 1 ? 'photos' : 'photo' : 'photo' }}</div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="white" no-border-bottom>
+  <ion-navbar color="primary" no-border-bottom>
     <ion-title>{{ propertyRecord.property.house_number }}, {{ propertyRecord.property.street_name }}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="openMenuOption()">
@@ -147,10 +147,10 @@
         </div>
       </ion-card-content>
     </ion-card>
-    <div class="padder m-t-lg m-b-lg">
-      <button class="rounded" [disabled]="loading" ion-button block color="secondary" (click)="openPropertyEntityPage()">
-        <b>View Entity List</b>
-      </button>
-    </div>
   </div>
+  <ion-fab bottom right>
+    <button color="primary" (click)="openPropertyEntityPage()" ion-fab>
+      <ion-icon name="people"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { CreateService } from '../../app.services/http/crud/create.services';
 import { Store } from '../../app.services/store/data.store';
 import { SharedServices } from '../../app.services/library/shared.services';
 import { FormConfig } from '../../app.services/store/form.config';
@@ -16,6 +15,7 @@ export class NewEntityPage {
   public payload: any = {
     property_id: '',
     entity: {
+      entity_id: '',
       entity_name: '',
       entity_group: '',
       entity_category: '',
@@ -38,6 +38,7 @@ export class NewEntityPage {
       coordinates: [],
       whatthreewords: ''
     },
+    property_photos: [],
     enumerator: {
       id: '',
       firstname: '',
@@ -51,8 +52,7 @@ export class NewEntityPage {
 
   private user: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formConfig: FormConfig,
-    private cs: CreateService, private store: Store, private ss: SharedServices,
-    private geolocation: Geolocation) {
+    private store: Store, private ss: SharedServices, private geolocation: Geolocation) {
     this.dataInit();
   }
 
@@ -87,23 +87,24 @@ export class NewEntityPage {
       email: this.user.personal.email,
       mobile: this.user.personal.mobile
     };
+    this.payload.entity.entity_id = this.ss.GENERATE_ENTITY_ID();
     this.geolocation.getCurrentPosition({ timeout: 30000, enableHighAccuracy: true }).then((position) => {
       this.ss.toast('Location captured', 2000);
       this.payload.location.coordinates = [position.coords.longitude, position.coords.latitude];
-        this.cs.addNewPropertyEntity(this.payload).then(payload => {
-          if (payload['success']) {
+        this.store.UPDATE_RECORD('__entities__',this.payload).then(feedback => {
+          if (feedback) {
             this.ss.dismissLoading();
-            this.ss.swalAlert('Data Service', 'Record added successfully. <br><b>Next</b>: Add entity photo', 'success');
+            this.ss.swalAlert('Data Service', 'Record stored successfully. <br><b>Next</b>: Add entity photo', 'success');
             this.navCtrl.pop().then(() => {
-              this.navCtrl.push(EntityPhotoPage, { data: this.payload.property_id });
+              this.navCtrl.push(EntityPhotoPage, { property: this.payload.property_id, entity: this.payload.entity.entity_id });
             });
           } else {
             this.ss.dismissLoading();
-            this.ss.swalAlert('Data Service', 'Network connection error! Please try again.', 'error');
+            this.ss.swalAlert('Data Service', 'Storage error! Please try again.', 'error');
           }
         }).catch(err => {
           this.ss.dismissLoading();
-          this.ss.swalAlert('Data Service', 'Network connection error! Please try again.', 'error');
+          this.ss.swalAlert('Data Service', 'Storage error! Please try again.', 'error');
         });
     }).catch(err => {
       this.ss.dismissLoading();

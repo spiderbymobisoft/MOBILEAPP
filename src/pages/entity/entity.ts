@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { EntityPhotoPage } from '../entity-photo/entity-photo';
+import { Store } from '../../app.services/store/data.store';
 
 @IonicPage()
 @Component({
@@ -10,14 +11,16 @@ import { EntityPhotoPage } from '../entity-photo/entity-photo';
 export class EntityPage {
 
   public entityRecord: any;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, private actionSheetCtrl: ActionSheetController) {
+  public offlinePhotos: any[]=[];
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private actionSheetCtrl: ActionSheetController, private store: Store) {
     this.entityRecord = navParams.get('data');
   }
 
   ionViewDidLoad() {
-    
   }
+
+ 
 
   openMenuOption() {
     let actionSheet = this.actionSheetCtrl.create({
@@ -42,7 +45,7 @@ export class EntityPage {
   }
 
   addPhoto(){
-    this.navCtrl.push(EntityPhotoPage, { data: this.entityRecord.property_id });
+    this.navCtrl.push(EntityPhotoPage, { data: this.entityRecord.entity.entity_id });
   }
 
 

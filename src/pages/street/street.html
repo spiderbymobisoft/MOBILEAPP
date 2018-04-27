@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="white" no-border-bottom>
+  <ion-navbar color="primary" no-border-bottom>
     <ion-title>{{ streetRecord.street.street_name }}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="openMenuOption()">
@@ -15,7 +15,7 @@
     </ion-col>
     <ion-col class="text-ellipsis-flex">
       <div class="l-h">
-          <div class="font-bold text-ellipsis">{{ streetRecord.street.gis_id ? streetRecord.street.gis_id : 'No GIS ID'  }}</div>
+        <div class="font-bold text-ellipsis">{{ streetRecord.street.gis_id ? streetRecord.street.gis_id : 'No GIS ID' }}</div>
         <div class="font-bold text-ellipsis">{{ streetRecord.street.street_name }}</div>
         <div class="text-sm">{{ streetRecord.street.area }}, {{ streetRecord.street.location }}</div>
         <div class="text-sm">{{ streetRecord.street.lga }}, {{ streetRecord.street.state }}</div>
@@ -81,34 +81,33 @@
       <hr/>
     </div>
   </div>
-
-  <div *ngIf="streetRecord.street_photos.length > 0">
-    <ion-card *ngFor="let photo of streetRecord.street_photos">
-      <img src="{{ photo.url ? photo.url : 'assets/icon/street.svg' }}" />
-      <ion-card-content>
-        <ion-card-title>
-          {{ photo.title }}
-        </ion-card-title>
-        <div class="m-t-sm m-b-sm">
+    <div *ngIf="streetRecord.street_photos.length > 0 ">
+      <ion-card *ngFor="let photo of streetRecord.street_photos">
+        <img src="{{ photo.url ? photo.url : 'assets/icon/street.svg' }}" />
+        <ion-card-content>
+          <ion-card-title>
+            {{ photo.title }}
+          </ion-card-title>
+          <div class="m-t-sm m-b-sm">
             <div>
-                <ion-icon name="ios-camera-outline" color="primary"></ion-icon>
-                {{ photo.snapshot_position ? photo.snapshot_position : 'Not Available' }}
-              </div>
-          <div>
-            <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
-            {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
+              <ion-icon name="ios-camera-outline" color="primary"></ion-icon>
+              {{ photo.snapshot_position ? photo.snapshot_position : 'Not Available' }}
+            </div>
+            <div>
+              <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
+              {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
+            </div>
+            <div *ngIf="photo.location.whatthreewords">
+              <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
+            </div>
           </div>
-          <div *ngIf="photo.location.whatthreewords">
-            <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
 
-  <div class="padder m-t-lg m-b-lg">
-    <button class="rounded" [disabled]="loading" ion-button block color="secondary" (click)="openStreetPropertyPage()">
-      <b>View Property List</b>
+  <ion-fab bottom right>
+    <button color="primary" (click)="openStreetPropertyPage()" ion-fab>
+      <ion-icon name="home"></ion-icon>
     </button>
-  </div>
+  </ion-fab>
 </ion-content>

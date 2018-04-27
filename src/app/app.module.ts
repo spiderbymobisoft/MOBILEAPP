@@ -50,6 +50,14 @@ import { NewEntityPage } from '../pages/new-entity/new-entity';
 import { EntityPhotoPage } from '../pages/entity-photo/entity-photo';
 import { SelectStreetPage } from '../pages/select-street/select-street';
 import { StreetPropertiesPage } from '../pages/street-properties/street-properties';
+import { StreetsOfflinePage } from '../pages/streets-offline/streets.offline';
+import { StreetPropertiesOfflinePage } from '../pages/street-properties-offline/street.properties.offline';
+import { PropertiesOfflinePage } from '../pages/properties-offline/properties.offline';
+import { EntitiesOfflinePage } from '../pages/entities-offline/entities.offline';
+import { StreetOfflinePage } from '../pages/street-offline/street.offline';
+import { EntityOfflinePage } from '../pages/entity-offline/entity.offline';
+import { PropertyOfflinePage } from '../pages/property-offline/property.offline';
+import { OfflinePage } from '../pages/offline/offline';
 
 const __app_components__: any[] = [
   MyApp,
@@ -59,6 +67,13 @@ const __app_components__: any[] = [
   HomePage,
   ProfilePage,
   StreetsPage,
+  StreetsOfflinePage,
+  StreetPropertiesOfflinePage,
+  PropertiesOfflinePage,
+  EntitiesOfflinePage,
+  StreetOfflinePage,
+  EntityOfflinePage,
+  PropertyOfflinePage,
   NewStreetPage,
   PropertiesPage,
   NewPropertyPage,
@@ -73,7 +88,8 @@ const __app_components__: any[] = [
   NewEntityPage,
   EntityPhotoPage,
   SelectStreetPage,
-  StreetPropertiesPage
+  StreetPropertiesPage,
+  OfflinePage
 ];
 @NgModule({
   declarations: __app_components__,

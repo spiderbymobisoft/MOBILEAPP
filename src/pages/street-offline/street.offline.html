@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-title>{{ streetRecord.street.street_name }} (Offline)</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openMenuOption()">
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-row class="wrapper-sm">
+    <ion-col col-auto>
+      <ion-avatar item-start>
+        <img class="thumb-sm" src="assets/icon/street.svg">
+      </ion-avatar>
+    </ion-col>
+    <ion-col class="text-ellipsis-flex">
+      <div class="l-h">
+        <div class="font-bold text-ellipsis">{{ streetRecord.street.gis_id ? streetRecord.street.gis_id : 'No GIS ID' }}</div>
+        <div class="font-bold text-ellipsis">{{ streetRecord.street.street_name }}</div>
+        <div class="text-sm">{{ streetRecord.street.area }}, {{ streetRecord.street.location }}</div>
+        <div class="text-sm">{{ streetRecord.street.lga }}, {{ streetRecord.street.state }}</div>
+        <div class="text-sm text-black text-ellipsis">{{ streetRecord.street.country }}</div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content class="bg-white">
+
+  <div class="m-t-sm bg-white">
+    <div class="post-caption padder m-b-sm pos-rlt l-h">
+      <p>
+        <span class="font-bold"> Published </span>{{ streetRecord.created | amTimeAgo }}
+      </p>
+      <hr/>
+      <p>
+        <span class="font-bold"> GPS Location: </span>{{ streetRecord.location ? streetRecord.location.coordinates[0] + ', ' + streetRecord.location.coordinates[1]
+        : 'Not Available' }}
+      </p>
+      <p *ngIf="streetRecord.location.whatthreewords">
+        <span class="font-bold"> W3W: </span>{{ streetRecord.location ? streetRecord.location.whatthreewords : 'Not Available' }}
+      </p>
+      <hr/>
+      <p>
+        <span class="font-bold">Road Type: </span> {{ streetRecord.street.road_type }}
+      </p>
+      <p>
+        <span class="font-bold">Road Condition: </span>{{ streetRecord.street.road_condition }}
+      </p>
+      <p>
+        <span class="font-bold">Road Carriage: </span>{{ streetRecord.street.road_carriage }}
+      </p>
+      <hr/>
+      <p>
+        <span class="font-bold">Refuse Disposal: </span> {{ streetRecord.street.refuse_disposal }}
+      </p>
+      <p>
+        <span class="font-bold">Drainage: </span>{{ streetRecord.street.drainage }}
+      </p>
+      <p>
+        <span class="font-bold">Electricity: </span>{{ streetRecord.street.electricity }}
+      </p>
+      <hr/>
+      <div *ngIf="streetRecord.street.street_furniture.length > 0">
+        <p class="font-bold">Street Furniture</p>
+        <ul>
+          <li *ngFor="let sf of streetRecord.street.street_furniture">
+            {{ sf }}
+          </li>
+        </ul>
+      </div>
+      <hr/>
+      <div *ngIf="streetRecord.street.road_feature.length > 0">
+        <p class="font-bold">Road Feature</p>
+        <ul>
+          <li *ngFor="let rf of streetRecord.street.road_feature">
+            {{ rf }}
+          </li>
+        </ul>
+      </div>
+      <hr/>
+    </div>
+  </div>
+  <div>
+    <ion-card *ngFor="let photo of offlinePhotos">
+      <img src="{{ photo.photo }}" />
+      <ion-card-content>
+        <ion-card-title>
+          {{ photo.title }}
+        </ion-card-title>
+        <div class="m-t-sm m-b-sm">
+          <div>
+            <ion-icon name="ios-camera-outline" color="primary"></ion-icon>
+            {{ photo.snapshot_position ? photo.snapshot_position : 'Not Available' }}
+          </div>
+          <div>
+            <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
+            {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
+          </div>
+          <div *ngIf="photo.location.whatthreewords">
+            <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-fab bottom right>
+    <button color="primary" (click)="openStreetPropertyPage()" ion-fab>
+      <ion-icon name="home"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

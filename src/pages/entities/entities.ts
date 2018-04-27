@@ -46,7 +46,7 @@ export class EntitiesPage {
   }
 
   showThisRecord(entityRecord){
-    this.navCtrl.push(EntityPage, {data: entityRecord})
+    this.navCtrl.push(EntityPage, {data: entityRecord, sender: 'online'});
   }
 }
 

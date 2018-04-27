@@ -10,25 +10,6 @@ export class Intelligence {
    // Directly return the joined string
    return splitStr.join(' ');
   }
-
-  GENERATE_STREET_ID(){
-    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    var text='SID-';
-    var len = 16;
-    for( var i=0; i < len; i++ )
-        text += charset.charAt(Math.floor(Math.random() * charset.length));
-    return text;
-  }
-
-  GENERATE_PROPERTY_ID(){
-    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    var text='SID-';
-    var len = 16;
-    for( var i=0; i < len; i++ )
-        text += charset.charAt(Math.floor(Math.random() * charset.length));
-    return text;
-  }
-
   
   isEmailValid(email) {
     var x = email;

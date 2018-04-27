@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { ProfilePage } from '../profile/profile';
-import { NewStreetPage } from '../new-street/new-street';
 import { AuthenticationService } from '../../app.services/http/authentication/auth.service';
 import { LoginPage } from '../login/login';
 import { SupportPage } from '../support/support';
-import { SelectStreetPage } from '../select-street/select-street';
+import { StreetsPage } from '../streets/streets';
+import { OfflinePage } from '../offline/offline';
 
 @IonicPage()
 @Component({
@@ -32,16 +32,16 @@ export class HomePage {
       page: ProfilePage
     },
     {
-      title: 'Street Records',
-      img: 'assets/icon/street.svg',
-      description: 'Add Streets Information',
-      page: NewStreetPage
+      title: 'Online Records',
+      img: 'assets/icon/online.svg',
+      description: 'View Online Records',
+      page: StreetsPage
     },
     {
-      title: 'Property Records',
-      img: 'assets/icon/property.svg',
-      description: 'Add Properties Information',
-      page: SelectStreetPage
+      title: 'Offline Records',
+      img: 'assets/icon/offline.svg',
+      description: 'View Offline Records',
+      page: OfflinePage
     },
     {
       title: 'Support',

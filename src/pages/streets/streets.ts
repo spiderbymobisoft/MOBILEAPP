@@ -24,10 +24,10 @@ export class StreetsPage {
   }
 
   ionViewDidLoad() {
+    this.dataInit();
   }
 
   ionViewWillEnter() {
-    this.dataInit();
   }
 
   dataInit() {
@@ -146,6 +146,7 @@ export class StreetsPage {
       infiniteScroll.complete();
     }).catch(err => {
       this.ss.toast('No network connection...', 2000);
+      infiniteScroll.complete();
     });
   }
 
@@ -154,7 +155,7 @@ export class StreetsPage {
   }
 
   showThisRecord(streetRecord){
-    this.navCtrl.push(StreetPage, {data: streetRecord})
+    this.navCtrl.push(StreetPage, { data: streetRecord })
   }
 
   
