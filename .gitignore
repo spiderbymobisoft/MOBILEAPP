@@ -15,6 +15,7 @@ npm-debug.log*
 *.keystore
 *.apk
 
+.sourcemaps/
 .idea/
 .sass-cache/
 .tmp/
