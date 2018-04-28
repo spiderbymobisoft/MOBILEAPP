@@ -5,6 +5,9 @@ export class FormConfig {
 
     public siteCondition = [
         {
+            id: 0, text: 'Completed'
+        },
+        {
             id: 1, text: 'Abadoned'
         }, {
             id: 2, text: 'Demolished'

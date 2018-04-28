@@ -13,6 +13,7 @@ import { EntityPhotoPage } from '../entity-photo/entity-photo';
 })
 export class NewEntityPage {
   public payload: any = {
+    record_id: '',
     document_owner: '',
     property_id: '',
     entity: {
@@ -59,6 +60,7 @@ export class NewEntityPage {
 
   dataInit() {
     this.payload.property_id = this.navParams.get('data');
+    this.payload.record_id = this.ss.GENERATE_RECORD_ID();
     this.user = this.store.GET_USER();
   }
 

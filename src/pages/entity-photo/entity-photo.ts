@@ -13,6 +13,7 @@ import { Store } from '../../app.services/store/data.store';
 export class EntityPhotoPage {
 
   public payload: any = {
+    photo_id: '',
     property_id: '',
     entity_id: '',
     snapshot_position: '',
@@ -29,7 +30,8 @@ export class EntityPhotoPage {
     private store: Store, private ss: SharedServices, private geolocation: Geolocation,
     private camera: Camera) {
     this.payload.property_id = navParams.get('property');
-    this.payload.entity_id = navParams.get('entity')
+    this.payload.entity_id = navParams.get('entity');
+    this.payload.photo_id = ss.GENERATE_PHOTO_ID();
   }
 
   ionViewDidLoad() {

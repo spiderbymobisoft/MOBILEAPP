@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ActionSheetController } from 'ioni
 import { StreetPhotoPage } from '../street-photo/street-photo';
 import { NewPropertyPage } from '../new-property/new-property';
 import { StreetPropertiesPage } from '../street-properties/street-properties';
-import { Store } from '../../app.services/store/data.store';
 
 @IonicPage()
 @Component({
@@ -16,7 +15,7 @@ export class StreetPage {
   public sender: string;
   public offlinePhotos: any[] = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private actionSheetCtrl: ActionSheetController, private store: Store) {
+    private actionSheetCtrl: ActionSheetController) {
     this.streetRecord = navParams.get('data');
   }
 

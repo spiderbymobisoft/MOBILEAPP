@@ -28,7 +28,7 @@ export class OfflinePage {
       entities: 0
     }
   };
-  public menuItems: any[];
+  public menuItems: any[] = [];
 
   private streets: any[];
   private properties: any[];
@@ -41,7 +41,7 @@ export class OfflinePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private us: UpdateService,
     private store: Store, private cs: CreateService, private ss: SharedServices) {
-    this.menuInit();
+
   }
 
   ionViewDidLoad() {
@@ -53,6 +53,7 @@ export class OfflinePage {
   }
 
   offlineDataInit() {
+    this.menuItems = [];
     this.streets = this.store.GET_RECORD('__streets__');
     this.properties = this.store.GET_RECORD('__properties__');
     this.entities = this.store.GET_RECORD('__entities__');
@@ -61,20 +62,23 @@ export class OfflinePage {
     this.property_photos = this.store.GET_PHOTOS('__property_photos__');
     this.entity_photos = this.store.GET_PHOTOS('__entity_photos__');
 
+    this.stats = {
+      data: {
+        streets: this.streets.length,
+        properties: this.properties.length,
+        entities: this.entities.length
+      },
+      photo: {
+        streets: this.street_photos.length,
+        properties: this.property_photos.length,
+        entities: this.entity_photos.length
+      },
+      count: this.streets.length + this.properties.length + this.entities.length + this.street_photos.length + this.property_photos.length + this.entity_photos.length
+    }
+
     setTimeout(() => {
-      this.stats = {
-        data: {
-          streets: this.streets.length,
-          properties: this.properties.length,
-          entities: this.entities.length
-        },
-        photo: {
-          streets: this.street_photos.length,
-          properties: this.property_photos.length,
-          entities: this.entity_photos.length
-        }
-      }
-    }, 300);
+      this.menuInit();
+    }, 1500);
 
   }
 
@@ -86,37 +90,37 @@ export class OfflinePage {
     this.menuItems = [{
       title: 'Streets',
       img: 'assets/icon/street.svg',
-      description: this.stats.data.streets > 1 ? `${this.stats.data.streets} Record` : `${this.stats.data.streets} Records`,
+      description: this.stats.data.streets > 1 ? `${this.stats.data.streets} Records` : `${this.stats.data.streets} Record`,
       page: StreetsOfflinePage
     },
     {
       title: 'Street Photos',
       img: 'assets/icon/photo.svg',
-      description: this.stats.photo.street_photos > 1 ? `${this.stats.photo.streets} Record` : `${this.stats.photo.streets} Records`,
+      description: this.stats.photo.street_photos > 1 ? `${this.stats.photo.streets} Records` : `${this.stats.photo.streets} Record`,
       page: StreetsOfflinePage
     },
     {
       title: 'Properties',
       img: 'assets/icon/property.svg',
-      description: this.stats.data.properties > 1 ? `${this.stats.data.properties} Record` : `${this.stats.data.properties} Records`,
+      description: this.stats.data.properties > 1 ? `${this.stats.data.properties} Records` : `${this.stats.data.properties} Record`,
       page: PropertiesOfflinePage
     },
     {
       title: 'Property Photos',
       img: 'assets/icon/photo.svg',
-      description: this.stats.photo.street_photos > 1 ? `${this.stats.photo.properties} Record` : `${this.stats.photo.properties} Records`,
+      description: this.stats.photo.street_photos > 1 ? `${this.stats.photo.properties} Records` : `${this.stats.photo.properties} Record`,
       page: PropertiesOfflinePage
     },
     {
       title: 'Entities',
       img: 'assets/icon/entity.svg',
-      description: this.stats.data.entities > 1 ? `${this.stats.data.entities} Record` : `${this.stats.data.entities} Records`,
+      description: this.stats.data.entities > 1 ? `${this.stats.data.entities} Records` : `${this.stats.data.entities} Record`,
       page: EntitiesOfflinePage
     },
     {
       title: 'Entity Photos',
       img: 'assets/icon/photo.svg',
-      description: this.stats.photo.entity_photos > 1 ? `${this.stats.photo.entities} Record` : `${this.stats.photo.entities} Records`,
+      description: this.stats.photo.entity_photos > 1 ? `${this.stats.photo.entities} Records` : `${this.stats.photo.entities} Record`,
       page: EntitiesOfflinePage
     }];
   }
@@ -126,52 +130,59 @@ export class OfflinePage {
   }
 
   pushToCloud() {
-    this.ss.presentLoading();
+    if(this.stats.count > 0){
+      this.ss.presentLoading();
+      this.processStreets(this.streets).then((feedback) => {
+        if (feedback) {
+          this.processStreetPhotos(this.street_photos).then((feedback) => {
+            if (feedback) {
+              this.processProperties(this.properties).then((feedback) => {
+                if (feedback) {
+                  this.processPropertyPhotos(this.property_photos).then((feedback) => {
+                    if (feedback) {
+                      this.processEntities(this.entities).then((feedback) => {
+                        if (feedback) {
+                          this.processEntityPhotos(this.entity_photos).then((feedback) => {
+                            if (feedback) {
+                              this.ss.toast(`Successfully pushed ${this.count} records to cloud`, 3000);
+                              setTimeout(() => {
+                                this.offlineDataInit();
+                                this.ss.dismissLoading();
+                              }, 5000);
+                            } else {
+                              this.ss.toast('Unable to push entity photos to cloud. Please try again', 2000);
+                              this.ss.dismissLoading();
+                            }
+                          });
+                        } else {
+                          this.ss.toast('Unable to push entity records to cloud. Please try again', 2000);
+                          this.ss.dismissLoading();
+                        }
+                      });
+                    } else {
+                      this.ss.toast('Unable to push property photos to cloud. Please try again', 2000);
+                      this.ss.dismissLoading();
+                    }
+                  });
+                } else {
+                  this.ss.toast('Unable to push property records to cloud. Please try again', 2000);
+                  this.ss.dismissLoading();
+                }
+              });
+            } else {
+              this.ss.toast('Unable to push street photos to cloud. Please try again', 2000);
+              this.ss.dismissLoading();
+            }
+          });
+        } else {
+          this.ss.toast('Unable to push street records to cloud. Please try again', 2000);
+          this.ss.dismissLoading();
+        }
+      });
 
-    this.processStreets(this.streets).then((feedback) => {
-      if (feedback) {
-        this.processStreetPhotos(this.street_photos).then((feedback) => {
-          if (feedback) {
-            this.processProperties(this.properties).then((feedback) => {
-              if (feedback) {
-                this.processPropertyPhotos(this.property_photos).then((feedback) => {
-                  if (feedback) {
-                    this.processEntities(this.entities).then((feedback) => {
-                      if (feedback) {
-                        this.processEntityPhotos(this.entity_photos).then((feedback) => {
-                          if (feedback) {
-                            this.ss.toast(`Successfully pushed ${this.count} records to cloud`, 3000);
-                            this.ss.dismissLoading();
-                          } else {
-                            this.ss.toast('Unable to push entity photos to cloud. Please try again', 2000);
-                            this.ss.dismissLoading();
-                          }
-                        });
-                      } else {
-                        this.ss.toast('Unable to push entity records to cloud. Please try again', 2000);
-                        this.ss.dismissLoading();
-                      }
-                    });
-                  } else {
-                    this.ss.toast('Unable to push property photos to cloud. Please try again', 2000);
-                    this.ss.dismissLoading();
-                  }
-                });
-              } else {
-                this.ss.toast('Unable to push property records to cloud. Please try again', 2000);
-                this.ss.dismissLoading();
-              }
-            });
-          } else {
-            this.ss.toast('Unable to push street photos to cloud. Please try again', 2000);
-            this.ss.dismissLoading();
-          }
-        });
-      } else {
-        this.ss.toast('Unable to push street records to cloud. Please try again', 2000);
-        this.ss.dismissLoading();
-      }
-    });
+    }else{
+      this.ss.toast('No record to push to cloud', 3000);
+    }
   }
 
   processStreets(payload) {
@@ -182,7 +193,7 @@ export class OfflinePage {
           this.count += 1;
           this.cs.addNewStreet(data).then(feedback => {
             if (feedback) {
-              this.ss.toast(`Record ${this.count} uploaded successfully.`, 3000);
+              this.store.REMOVE_STREET(data.record_id);
             } else {
               this.ss.toast(`Record ${this.count} failed to uploaded.`, 3000);
             }
@@ -203,7 +214,7 @@ export class OfflinePage {
           this.count += 1;
           this.us.uploadStreetPhoto(data).subscribe(feedback => {
             if (feedback.success) {
-              this.ss.toast(`Record ${this.count} uploaded successfully.`, 3000);
+              this.store.REMOVE_STREET_PHOTO(data.photo_id);
             } else {
               this.ss.toast(`Record ${this.count} failed to uploaded.`, 3000);
             }
@@ -224,7 +235,7 @@ export class OfflinePage {
           this.count += 1;
           this.cs.addNewProperty(data).then(feedback => {
             if (feedback) {
-              this.ss.toast(`Record ${this.count} uploaded successfully.`, 3000);
+              this.store.REMOVE_PROPERTY(data.record_id);
             } else {
               this.ss.toast(`Record ${this.count} failed to uploaded.`, 3000);
             }
@@ -245,7 +256,7 @@ export class OfflinePage {
           this.count += 1;
           this.us.uploadPropertyPhoto(data).subscribe(feedback => {
             if (feedback.success) {
-              this.ss.toast(`Record ${this.count} uploaded successfully.`, 3000);
+              this.store.REMOVE_PROPERTY_PHOTO(data.photo_id);
             } else {
               this.ss.toast(`Record ${this.count} failed to uploaded.`, 3000);
             }
@@ -266,7 +277,7 @@ export class OfflinePage {
           this.count += 1;
           this.cs.addNewPropertyEntity(data).then(feedback => {
             if (feedback) {
-              this.ss.toast(`Record ${this.count} uploaded successfully.`, 3000);
+              this.store.REMOVE_ENTITY(data.record_id);
             } else {
               this.ss.toast(`Record ${this.count} failed to uploaded.`, 3000);
             }
@@ -287,7 +298,7 @@ export class OfflinePage {
           this.count += 1;
           this.us.uploadEntityPhoto(data).subscribe(feedback => {
             if (feedback.success) {
-              this.ss.toast(`Record ${this.count} uploaded successfully.`, 3000);
+              this.store.REMOVE_ENTITY_PHOTO(data.photo_id);
             } else {
               this.ss.toast(`Record ${this.count} failed to uploaded.`, 3000);
             }

@@ -15,6 +15,7 @@ import { StreetPhotoPage } from '../street-photo/street-photo';
 export class NewStreetPage {
 
   public payload: any = {
+    record_id: '',
     document_owner: '',
     street: {
       street_id: '',
@@ -56,7 +57,12 @@ export class NewStreetPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formConfig: FormConfig,
     private store: Store, private ss: SharedServices, private nss: NigeriaStatesService,
     private geolocation: Geolocation) {
-    this.user = store.GET_USER();
+      this.dataInit();
+  }
+
+  dataInit(){
+    this.user = this.store.GET_USER();
+    this.payload.record_id = this.ss.GENERATE_RECORD_ID();
   }
 
   ionViewDidLoad() {

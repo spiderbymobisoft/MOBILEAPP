@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { EntityPhotoPage } from '../entity-photo/entity-photo';
-import { Store } from '../../app.services/store/data.store';
 
 @IonicPage()
 @Component({
@@ -13,7 +12,7 @@ export class EntityPage {
   public entityRecord: any;
   public offlinePhotos: any[]=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private actionSheetCtrl: ActionSheetController, private store: Store) {
+    private actionSheetCtrl: ActionSheetController) {
     this.entityRecord = navParams.get('data');
   }
 

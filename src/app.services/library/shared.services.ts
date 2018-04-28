@@ -47,6 +47,27 @@ export class SharedServices {
     this.loader.dismiss();
   }
 
+  GENERATE_RECORD_ID(){
+    const now = new Date().getTime();
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let text='RID-' + now + '-';
+    let len = 16;
+    for( let i=0; i < len; i++ )
+        text += charset.charAt(Math.floor(Math.random() * charset.length));
+    return text;
+  }
+
+
+  GENERATE_PHOTO_ID(){
+    const now = new Date().getTime();
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let text='PIX-' + now + '-';
+    let len = 16;
+    for( let i=0; i < len; i++ )
+        text += charset.charAt(Math.floor(Math.random() * charset.length));
+    return text;
+  }
+
   GENERATE_STREET_ID(){
     const now = new Date().getTime();
     const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

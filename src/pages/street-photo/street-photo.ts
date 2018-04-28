@@ -13,6 +13,7 @@ import { Store } from '../../app.services/store/data.store';
 export class StreetPhotoPage {
 
   public payload: any = {
+    photo_id: '',
     street_id: '',
     snapshot_position: '',
     title: '',
@@ -28,6 +29,7 @@ export class StreetPhotoPage {
     private store: Store, private ss: SharedServices,
     private geolocation: Geolocation, private camera: Camera) {
     this.payload.street_id = this.navParams.get('data');
+    this.payload.photo_id = ss.GENERATE_PHOTO_ID();
   }
 
   ionViewDidLoad() {

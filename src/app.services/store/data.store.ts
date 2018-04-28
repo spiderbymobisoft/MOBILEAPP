@@ -3,20 +3,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class Store {
 
-    private USER: any;
-
     GET_USER(): any {
-        return this.USER ? this.USER : JSON.parse(localStorage.getItem('__user__'));
+        return JSON.parse(localStorage.getItem('__user__'));
     }
 
     UPDATE_USER(data): void {
         localStorage.setItem('__user__', JSON.stringify(data));
-        this.USER = data;
     }
 
     DELETE_USER(): void {
         localStorage.removeItem('__user__');
-        this.USER = null;
     }
 
     GET_RECORD(target: string): any[] {
@@ -28,15 +24,15 @@ export class Store {
     GET_STREET_PROPERTIES(id: string): any[] {
         let records: any[];
         records = JSON.parse(localStorage.getItem('__properties__') || '[]');
-        return records.filter(record=>record.property.street_id == id);
-        
+        return records.filter(record => record.property.street_id == id);
+
     }
 
 
     GET_PROPERTY_ENTITIES(id: string): any[] {
         let records: any[];
         records = JSON.parse(localStorage.getItem('__entities__') || '[]');
-        return records.filter(record=>record.property_id == id);
+        return records.filter(record => record.property_id == id);
     }
 
     UPDATE_RECORD(target: string, data: any) {
@@ -59,19 +55,19 @@ export class Store {
     GET_STREET_PHOTOS(id: string): any[] {
         let records: any[];
         records = JSON.parse(localStorage.getItem('__street_photos__') || '[]');
-        return records.filter(record=>record.street_id == id);
+        return records.filter(record => record.street_id == id);
     }
 
     GET_PROPERTY_PHOTOS(id: string): any[] {
         let records: any[];
         records = JSON.parse(localStorage.getItem('__property_photos__') || '[]');
-        return records.filter(record=>record.property_id == id);
+        return records.filter(record => record.property_id == id);
     }
 
     GET_ENTITY_PHOTOS(id: string): any[] {
         let records: any[];
         records = JSON.parse(localStorage.getItem('__entity_photos__') || '[]');
-        return records.filter(record=>record.entity_id == id);
+        return records.filter(record => record.entity_id == id);
     }
 
     UPDATE_PHOTOS(target: string, data: any) {
@@ -84,5 +80,57 @@ export class Store {
         });
     }
 
+    //REMOVE FROM STORAGE
+
+    REMOVE_STREET(id: string): void {
+        let records: any[];
+        let temp: any[];
+        records = JSON.parse(localStorage.getItem('__streets__') || '[]');
+        temp = records.filter(data=> data.record_id != id);
+        localStorage.setItem('__streets__', JSON.stringify(temp));
+    }
+
+
+    REMOVE_PROPERTY(id: string): void {
+        let records: any[];
+        let temp: any[];
+        records = JSON.parse(localStorage.getItem('__properties__') || '[]');
+        temp = records.filter(data=> data.record_id != id);
+        localStorage.setItem('__properties__', JSON.stringify(temp));
+    }
+
+
+    REMOVE_ENTITY(id: string): void {
+        let records: any[];
+        let temp: any[];
+        records = JSON.parse(localStorage.getItem('__entities__') || '[]');
+        temp = records.filter(data=> data.record_id != id);
+        localStorage.setItem('__entities__', JSON.stringify(temp));
+    }
+
+
+    REMOVE_STREET_PHOTO(id: string): void {
+        let records: any[];
+        let temp: any[];
+        records = JSON.parse(localStorage.getItem('__street_photos__') || '[]');
+        temp = records.filter(data=> data.photo_id != id);
+        localStorage.setItem('__street_photos__', JSON.stringify(temp));
+    }
+
+    REMOVE_PROPERTY_PHOTO(id: string): void {
+        let records: any[];
+        let temp: any[];
+        records = JSON.parse(localStorage.getItem('__property_photos__') || '[]');
+        temp = records.filter(data=> data.photo_id != id);
+        localStorage.setItem('__property_photos__', JSON.stringify(temp));
+    }
+
+    REMOVE_ENTITY_PHOTO(id: string): void {
+        let records: any[];
+        let temp: any[];
+        records = JSON.parse(localStorage.getItem('__entity_photos__') || '[]');
+        temp = records.filter(data=> data.photo_id != id);
+        localStorage.setItem('__entity_photos__', JSON.stringify(temp));
+    }
 
 }

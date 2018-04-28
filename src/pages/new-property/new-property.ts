@@ -14,6 +14,7 @@ import { PropertyPhotoPage } from '../property-photo/property-photo';
 export class NewPropertyPage {
 
   public payload: any = {
+    record_id: '',
     document_owner: '',
     property: {
       property_id: '',
@@ -71,6 +72,7 @@ export class NewPropertyPage {
 
   dataInit() {
     this.user = this.store.GET_USER();
+    this.payload.record_id = this.ss.GENERATE_RECORD_ID();
     this.payload.property.street_id = this.streetData['street_id'];
     this.payload.property.street_name = this.streetData['street_name'];
     this.payload.property.lga = this.streetData['lga'];

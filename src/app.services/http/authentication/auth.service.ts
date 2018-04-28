@@ -39,11 +39,12 @@ export class AuthenticationService{
     destroyUserCredentials() {
         this.isLoggedin = false;
         this.authToken = null;
-        localStorage.removeItem('__user__');
+        /* localStorage.removeItem('__user__');
         localStorage.removeItem('__token__');
         localStorage.removeItem('__remembrance__');
         localStorage.removeItem('__email__');
-        localStorage.removeItem('__password__');
+        localStorage.removeItem('__password__'); */
+        localStorage.clear();
     }
     
     authenticate(user) {

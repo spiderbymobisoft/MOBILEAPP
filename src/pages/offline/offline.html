@@ -2,7 +2,7 @@
   <ion-navbar color="primary" no-border-bottom>
     <ion-title>Offline Stats</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="pushToCloud()" >
+      <button ion-button icon-only (click)="pushToCloud()">
         <ion-icon name="cloud-upload"></ion-icon>
       </button>
     </ion-buttons>
@@ -10,6 +10,9 @@
 </ion-header>
 
 <ion-content class="bg-white">
+  <div padding style="text-align: center; margin-top: 60px" *ngIf="menuItems.length === 0">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
   <ion-content class="bg-white">
     <ion-row text-center>
       <ion-col (click)="openThis(menu)" col-6 *ngFor="let menu of menuItems" class="b-r b-b b-light">

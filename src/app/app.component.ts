@@ -32,7 +32,7 @@ export class MyApp {
 
   flurryAnalyticsInit(){
     const options: FlurryAnalyticsOptions = {
-      appKey: 'NGMXFHK363CTJ8QMN94T', 
+      appKey: '93WPPFW9TZGNTXC38KFS', 
       reportSessionsOnClose: true,
       enableLogging: true
      };
