@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Store } from '../../app.services/store/data.store';
-import { EntitiesOfflinePage } from '../entities-offline/entities.offline';
 import { PropertiesOfflinePage } from '../properties-offline/properties.offline';
 import { StreetsOfflinePage } from '../streets-offline/streets.offline';
 import { CreateService } from '../../app.services/http/crud/create.services';
 import { SharedServices } from '../../app.services/library/shared.services';
 import { UpdateService } from '../../app.services/http/crud/update.services';
+import { EntitiesOfflineAllPage } from '../entities-offline-all/entities.offline.all';
 
 @IonicPage()
 @Component({
@@ -115,13 +115,13 @@ export class OfflinePage {
       title: 'Entities',
       img: 'assets/icon/entity.svg',
       description: this.stats.data.entities > 1 ? `${this.stats.data.entities} Records` : `${this.stats.data.entities} Record`,
-      page: EntitiesOfflinePage
+      page: EntitiesOfflineAllPage
     },
     {
       title: 'Entity Photos',
       img: 'assets/icon/photo.svg',
       description: this.stats.photo.entity_photos > 1 ? `${this.stats.photo.entities} Records` : `${this.stats.photo.entities} Record`,
-      page: EntitiesOfflinePage
+      page: EntitiesOfflineAllPage
     }];
   }
 
@@ -130,7 +130,7 @@ export class OfflinePage {
   }
 
   pushToCloud() {
-    if(this.stats.count > 0){
+    if (this.stats.count > 0) {
       this.ss.presentLoading();
       this.processStreets(this.streets).then((feedback) => {
         if (feedback) {
@@ -144,11 +144,11 @@ export class OfflinePage {
                         if (feedback) {
                           this.processEntityPhotos(this.entity_photos).then((feedback) => {
                             if (feedback) {
-                              this.ss.toast(`Successfully pushed ${this.count} records to cloud`, 3000);
                               setTimeout(() => {
+                                this.ss.toast(`Successfully pushed ${this.count} records to cloud`, 3000);
                                 this.offlineDataInit();
                                 this.ss.dismissLoading();
-                              }, 5000);
+                              }, 8000);
                             } else {
                               this.ss.toast('Unable to push entity photos to cloud. Please try again', 2000);
                               this.ss.dismissLoading();
@@ -180,7 +180,7 @@ export class OfflinePage {
         }
       });
 
-    }else{
+    } else {
       this.ss.toast('No record to push to cloud', 3000);
     }
   }

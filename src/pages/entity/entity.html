@@ -89,7 +89,7 @@
               <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
               {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
             </div>
-            <div>
+            <div *ngIf="photo.location.whatthreewords">
               <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
             </div>
           </div>

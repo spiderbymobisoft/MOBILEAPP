@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { AuthenticationService } from '../../app.services/http/authentication/auth.service';
 import { LoginPage } from '../login/login';
-import { SupportPage } from '../support/support';
+/* import { SupportPage } from '../support/support'; */
 import { StreetsPage } from '../streets/streets';
 import { OfflinePage } from '../offline/offline';
 
@@ -42,13 +42,13 @@ export class HomePage {
       img: 'assets/icon/offline.svg',
       description: 'View Offline Records',
       page: OfflinePage
-    },
+    }/* ,
     {
       title: 'Support',
       img: 'assets/icon/support.svg',
       description: 'Send Support Message',
       page: SupportPage
-    }];
+    } */];
   }
 
   openThis(menu){

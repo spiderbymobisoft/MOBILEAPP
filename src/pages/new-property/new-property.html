@@ -79,7 +79,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-item *ngIf="payload.property.storey_building === true">
+      <ion-item>
         <ion-label floating>Number of Floors</ion-label>
         <ion-input [(ngModel)]="payload.property.storey_building_floors" type="number" name="floors" id="floors"></ion-input>
       </ion-item>

@@ -10,7 +10,10 @@
 </ion-header>
 
 <ion-content class="bg-white">
-  <div class="wrapper-sm">
+    <div padding style="text-align: center; margin-top: 60px" *ngIf="!renderProfile">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+  <div *ngIf="renderProfile" class="wrapper-sm">
     <div class="profile-cover" [style.backgroundImage]="'url(assets/img/photo2.png)'"></div>
     <div class="bg-white wrapper text-center has-avatar-raised m-b-sm">
       <ion-avatar class="avatar-raised" (click)="profilePic()">

@@ -84,9 +84,6 @@
     <allow-navigation href="http://192.168.0.24:8100" />
     <allow-navigation href="http://192.168.0.24:8101" />
     <allow-navigation href="http://192.168.1.13:8100" />
-    <plugin name="com.synconset.imagepicker" spec="^2.1.10">
-        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="FemaleHire would like to access your photo" />
-    </plugin>
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.1.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
@@ -100,4 +97,5 @@
     </plugin>
     <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
     <engine name="ios" spec="^4.4.0" />
+    <engine name="android" spec="6.4.0" />
 </widget>

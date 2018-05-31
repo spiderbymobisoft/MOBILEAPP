@@ -3,13 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Keyboard } from '@ionic-native/keyboard';
-import { ImagePicker } from '@ionic-native/image-picker';
 import { HttpModule } from '@angular/http';
 import { ComponentsModule } from '../components/components.module';
 import { ElasticModule } from 'ng-elastic';
 import { DirectivesModule } from '../directives/directives.module';
 import { MomentModule } from 'angular2-moment';
-import { OneSignal } from '@ionic-native/onesignal';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -58,6 +56,7 @@ import { StreetOfflinePage } from '../pages/street-offline/street.offline';
 import { EntityOfflinePage } from '../pages/entity-offline/entity.offline';
 import { PropertyOfflinePage } from '../pages/property-offline/property.offline';
 import { OfflinePage } from '../pages/offline/offline';
+import { EntitiesOfflineAllPage } from '../pages/entities-offline-all/entities.offline.all';
 
 const __app_components__: any[] = [
   MyApp,
@@ -89,7 +88,8 @@ const __app_components__: any[] = [
   EntityPhotoPage,
   SelectStreetPage,
   StreetPropertiesPage,
-  OfflinePage
+  OfflinePage,
+  EntitiesOfflineAllPage
 ];
 @NgModule({
   declarations: __app_components__,
@@ -110,7 +110,6 @@ const __app_components__: any[] = [
   ,
   providers: [
     APIConfig,
-    OneSignal,
     AuthenticationService,
     CreateService,
     RetrieveService,
@@ -123,7 +122,7 @@ const __app_components__: any[] = [
     StatusBar,
     SplashScreen,
     Keyboard,
-    ImagePicker, Geolocation, WhatThreeWordsService,
+    Geolocation, WhatThreeWordsService,
     ScreenOrientation, Camera, FlurryAnalytics, 
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ],

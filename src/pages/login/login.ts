@@ -39,7 +39,12 @@ export class LoginPage {
     _remembrance === 'true' ? this.remembrance = true : this.remembrance = false;
 
     if (this.remembrance) {
-      this.navCtrl.setRoot(this.main_page.component);
+      let login = {
+        email: localStorage.getItem('__email__'),
+        password: localStorage.getItem('__password__')
+      }
+      this.ss.presentLoading();
+      this.validateLogin(login);
     }
 
   }

@@ -18,23 +18,32 @@ export class ProfilePage {
   public user: any;
   private _base64Image: any;
   public avatar: string;
+  private renderProfile: boolean  = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private us: UpdateService,
     private actionSheetCtrl: ActionSheetController, private ss: SharedServices, private camera: Camera,
     private store: Store, private auth: AuthenticationService) {
-    this.dataInit()
+ 
   }
 
   ionViewDidLoad() {
-
   }
 
   ionViewWillEnter() {
-    this.dataInit();
+
+    if(this.auth.isAuthenticated()){
+      this.dataInit();
+    }else{
+      this.navCtrl.setRoot(LoginPage);
+    }
+    
   }
 
   dataInit() {
     this.user = this.store.GET_USER();
     this.avatar = this.user.personal.avatar;
+    setTimeout(() => {
+      this.renderProfile = true;
+    }, 1000);
   }
 
 

@@ -30,7 +30,7 @@ export class NewPropertyPage {
       site_conditions: [],
       building_type: [],
       storey_building: false,
-      storey_building_floors: 1,
+      storey_building_floors: 0,
       water_supply: [0],
       refuse_disposal: '',
       has_signage: false,

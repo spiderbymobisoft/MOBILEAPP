@@ -138,7 +138,9 @@ export class NewStreetPage {
   processSave() {
     this.ss.presentLoading();
     this.payload.street.street_id = this.ss.GENERATE_STREET_ID();
-    this.payload.street.gis_id = this.ss.GENERATE_GIS_ID();
+    if(this.payload.street.gis_id === ''){
+      this.payload.street.gis_id = this.ss.GENERATE_GIS_ID();
+    }
     this.payload.document_owner = this.user.document_owner ? this.user.document_owner : this.user._id;
     this.payload.enumerator = {
       id: this.user._id,
