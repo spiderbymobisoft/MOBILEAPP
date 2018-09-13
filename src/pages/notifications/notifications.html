@@ -1,0 +1,57 @@
+<ion-header>
+
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-title>Inbox</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="bg-white">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="m-b-sm">
+
+    <div padding style="text-align: center; margin-top: 60px" *ngIf="notifications.length === 0 && isBlankPost === 0">
+      <ion-spinner color="primary"></ion-spinner>
+    </div>
+
+    <div *ngIf="notifications.length === 0 && isBlankPost === 1" class="text-center m-t-lg" padding>
+      <div>
+        <img src="assets/icon/notification.svg" class="img-svg" alt="Notifications">
+      </div>
+      <div class="m-t-lg">
+        <h3 class="text-thin">No notification at the moment.</h3>
+      </div>
+    </div>
+    <div *ngIf="notifications.length > 0">
+
+      <ion-row (click)="showThisNotification(data, i)" class="wrapper-sm b-b b-light" *ngFor="let data of notifications; let i = index;">
+        <ion-col col-auto>
+          <ion-avatar item-start>
+            <img class="thumb-sm" src="assets/icon/notification.svg">
+          </ion-avatar>
+        </ion-col>
+        <ion-col class="text-ellipsis-flex">
+          <div class="l-h">
+            <div class="{{ !data.read ? 'font-bold' : '' }}">{{ data.message.title }}</div>
+            <div class="text-xxs text-black">
+              <ion-icon name="time"></ion-icon>
+              {{ data.created | amTimeAgo }}
+            </div>
+          </div>
+        </ion-col>
+        <ion-col text-right col-auto>
+          <div>
+            <ion-icon color="primary" name="arrow-forward"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

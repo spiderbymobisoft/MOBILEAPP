@@ -4,7 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Store } from '../../app.services/store/data.store';
 import { SharedServices } from '../../app.services/library/shared.services';
 import { FormConfig } from '../../app.services/store/form.config';
-import { PropertyPhotoPage } from '../property-photo/property-photo';
+import { BSNStore } from '../../app.services/store/bsn.store';
 
 @IonicPage()
 @Component({
@@ -20,6 +20,7 @@ export class NewPropertyPage {
       property_id: '',
       street_id: '',
       building_serial_number: '',
+      master_building_serial_number: '',
       building_part_occupied: '',
       ownership_type: '',
       house_number: '',
@@ -31,12 +32,11 @@ export class NewPropertyPage {
       building_type: [],
       storey_building: false,
       storey_building_floors: 0,
-      water_supply: [0],
+      water_supply: [],
       refuse_disposal: '',
       has_signage: false,
-      gate_house: 0,
-      generator_house: 0,
-      boys_quarter: 0,
+      gate_house_id: '',
+      generator_house_id: '',
       number_of_entity: 1,
       accessible: true
     },
@@ -47,7 +47,10 @@ export class NewPropertyPage {
     },
     location: {
       type: 'Point',
-      coordinates: [],
+      coordinates: {
+        latitude: 0,
+        longitude: 0
+      },
       whatthreewords: ''
     },
     property_photos: [],
@@ -57,21 +60,27 @@ export class NewPropertyPage {
       lastname: '',
       email: '',
       telephone: ''
-    }
+    },
+    signature: ''
   };
 
   public nigeriaStates: any[] = [];
   public stateCities: any[] = [];
+  public bsnList: any[]=[];
   private user: any;
   private streetData: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formConfig: FormConfig,
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public formConfig: FormConfig, private bsn: BSNStore,
     private store: Store, private ss: SharedServices, private geolocation: Geolocation) {
     this.streetData = navParams.get('data');
     this.dataInit();
   }
 
   dataInit() {
-    this.user = this.store.GET_USER();
+    this.store.GET_USER().then(data=>{
+      this.user = data;
+      this.getBSN();
+    });
     this.payload.record_id = this.ss.GENERATE_RECORD_ID();
     this.payload.property.street_id = this.streetData['street_id'];
     this.payload.property.street_name = this.streetData['street_name'];
@@ -84,8 +93,25 @@ export class NewPropertyPage {
 
   }
 
+  getBSN(){
+    this.bsn.GET().then(docs=> this.bsnList = docs);
+  }
+
+  isFormValid(): boolean {
+    if(!this.payload.property.house_number || 
+      !this.payload.property.ownership_type || 
+      this.payload.property.site_conditions.length === 0 || 
+      this.payload.property.building_type.length === 0 || 
+      !this.payload.property.building_part_occupied
+    ){
+      return false
+    }else{
+      return true
+    }
+  }
+
   save() {
-    if (!this.payload.property.house_number || !this.payload.property.ownership_type || !this.payload.property.site_condition || this.payload.property.number_of_entity <= 0) {
+    if (!this.isFormValid()) {
       this.ss.swalAlert('Data Service', 'All fields are required. Please try again', 'error');
     } else {
       this.processSave();
@@ -95,6 +121,7 @@ export class NewPropertyPage {
 
   processSave() {
     this.ss.presentLoading();
+    this.payload.signature = this.ss.GENERATE_SIGNATURE;
     this.payload.property.property_id = this.ss.GENERATE_PROPERTY_ID();
     this.payload.document_owner = this.user.document_owner ? this.user.document_owner : this.user._id;
     this.payload.enumerator = {
@@ -107,16 +134,15 @@ export class NewPropertyPage {
     if(this.payload.property.building_serial_number === ''){
       this.payload.property.building_serial_number = this.ss.GENERATE_BUILDING_SERIAL_NUMBER();
     }
+    if(this.payload.property.master_building_serial_number === ''){
+      this.payload.property.master_building_serial_number = this.payload.property.building_serial_number;
+    }
     this.geolocation.getCurrentPosition({ timeout: 30000, enableHighAccuracy: true }).then((position) => {
       this.ss.toast('Location captured', 2000);
-      this.payload.location.coordinates = [position.coords.longitude, position.coords.latitude];
+      this.payload.location.coordinates = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       this.store.UPDATE_RECORD('__properties__',this.payload).then(feedback => {
         if (feedback) {
-          this.ss.dismissLoading();
-          this.ss.swalAlert('Data Service', 'Record stored successfully. <br><b>Next</b>: Add property photo', 'success');
-          this.navCtrl.pop().then(() => {
-            this.navCtrl.push(PropertyPhotoPage, { data: this.payload.property.property_id });
-          });
+          this.success();
         } else {
           this.ss.dismissLoading();
           this.ss.swalAlert('Data Service', 'Storage error! Please try again.', 'error');
@@ -131,6 +157,17 @@ export class NewPropertyPage {
     });
   }
 
+
+  success(){
+    this.ss.dismissLoading();
+          this.bsn.UPDATE(this.bsnList.filter(doc => doc.bsn != this.payload.property.building_serial_number))
+          .then(status=>{
+            this.ss.swalAlert('Data Service', 'Record stored successfully. <br><b>Next</b>: Add property photo', 'success');
+            this.navCtrl.pop().then(() => {
+              this.navCtrl.push('PropertyPhotoPage', { data: this.payload.property.property_id });
+            });
+          });
+  }
 
 }
 

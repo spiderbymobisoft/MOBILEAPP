@@ -4,7 +4,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Store } from '../../app.services/store/data.store';
 import { SharedServices } from '../../app.services/library/shared.services';
 import { FormConfig } from '../../app.services/store/form.config';
-import { EntityPhotoPage } from '../entity-photo/entity-photo';
 
 @IonicPage()
 @Component({
@@ -15,18 +14,19 @@ export class NewEntityPage {
   public payload: any = {
     record_id: '',
     document_owner: '',
+    building_serial_number: '',
     property_id: '',
     entity: {
       entity_id: '',
       entity_name: '',
       entity_group: '',
       entity_category: '',
+      entity_categories: [],
       meter_available: false,
       meter_condition: '',
       meter_phases: '',
       meter_type: '',
       meter_number: '',
-      boys_quarter: 0,
       has_signage: false,
       entity_detail: {}
     },
@@ -37,7 +37,10 @@ export class NewEntityPage {
     },
     location: {
       type: 'Point',
-      coordinates: [],
+      coordinates: {
+        latitude: 0,
+        longitude: 0
+      },
       whatthreewords: ''
     },
     property_photos: [],
@@ -47,7 +50,8 @@ export class NewEntityPage {
       lastname: '',
       email: '',
       telephone: ''
-    }
+    },
+    signature: ''
   };
 
   public entityGroup: any[] = [];
@@ -59,9 +63,12 @@ export class NewEntityPage {
   }
 
   dataInit() {
-    this.payload.property_id = this.navParams.get('data');
+    this.payload.property_id = this.navParams.get('propertyId');
+    this.payload.building_serial_number = this.navParams.get('BSN');
     this.payload.record_id = this.ss.GENERATE_RECORD_ID();
-    this.user = this.store.GET_USER();
+    this.store.GET_USER().then(data=>{
+      this.user = data;
+    });
   }
 
   ionViewDidLoad() {
@@ -72,8 +79,23 @@ export class NewEntityPage {
     this.entityGroup = this.formConfig.entityGroup.filter(data => data.title === value)[0]['sub_titles'];
   }
 
+  isFormValid(): boolean {
+    if(!this.payload.entity.entity_name || 
+      !this.payload.entity.entity_group || 
+      this.payload.entity.entity_categories.length === 0 ||
+      !this.payload.entity.meter_condition ||
+      !this.payload.entity.meter_phases ||
+      this.payload.entity.meter_type.length === 0 ||
+      !this.payload.entity.meter_number
+    ){
+      return false
+    }else{
+      return true
+    }
+  }
+
   save() {
-    if (!this.payload.entity.entity_name || !this.payload.entity.entity_group || !this.payload.entity.entity_category) {
+    if (!this.isFormValid()) {
       this.ss.swalAlert('Data Service', 'All fields are required. Please try again', 'error');
     } else {
       this.processSave();
@@ -83,6 +105,7 @@ export class NewEntityPage {
 
   processSave() {
     this.ss.presentLoading();
+    this.payload.signature = this.ss.GENERATE_SIGNATURE;
     this.payload.document_owner = this.user.document_owner ? this.user.document_owner : this.user._id;
     this.payload.enumerator = {
       id: this.user._id,
@@ -94,13 +117,17 @@ export class NewEntityPage {
     this.payload.entity.entity_id = this.ss.GENERATE_ENTITY_ID();
     this.geolocation.getCurrentPosition({ timeout: 30000, enableHighAccuracy: true }).then((position) => {
       this.ss.toast('Location captured', 2000);
-      this.payload.location.coordinates = [position.coords.longitude, position.coords.latitude];
+      this.payload.location.coordinates = { latitude: position.coords.latitude, longitude: position.coords.longitude };
         this.store.UPDATE_RECORD('__entities__',this.payload).then(feedback => {
           if (feedback) {
             this.ss.dismissLoading();
             this.ss.swalAlert('Data Service', 'Record stored successfully. <br><b>Next</b>: Add entity photo', 'success');
             this.navCtrl.pop().then(() => {
-              this.navCtrl.push(EntityPhotoPage, { property: this.payload.property_id, entity: this.payload.entity.entity_id });
+              this.navCtrl.push('EntityPhotoPage', { 
+                property: this.payload.property_id, 
+                entity: this.payload.entity.entity_id,
+                BSN: this.payload.building_serial_number
+              }); 
             });
           } else {
             this.ss.dismissLoading();

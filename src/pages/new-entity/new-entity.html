@@ -30,7 +30,7 @@
 
       <ion-item *ngIf="entityGroup.length > 0">
         <ion-label floating>Entity Category</ion-label>
-        <ion-select [(ngModel)]="payload.entity.entity_category" multiple="false">
+        <ion-select [(ngModel)]="payload.entity.entity_categories" multiple="true">
           <ion-option *ngFor="let data of entityGroup" value="{{ data.title }}">{{ data.title }}</ion-option>
         </ion-select>
       </ion-item>
@@ -82,11 +82,6 @@
       <ion-item>
         <ion-label floating>Meter Number</ion-label>
         <ion-input [(ngModel)]="payload.entity.meter_number" type="text" name="meterNumber" id="meterNumber"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Number of Boy's Quarter(s)</ion-label>
-        <ion-input [(ngModel)]="payload.entity.boys_quarter" type="number" name="bq" id="bq"></ion-input>
       </ion-item>
 
       <ion-item>

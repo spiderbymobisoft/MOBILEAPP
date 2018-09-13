@@ -16,7 +16,7 @@
     <ion-col class="text-ellipsis-flex">
       <div class="l-h">
         <div class="font-bold text-ellipsis">{{ entityRecord.entity.entity_name }}</div>
-        <div class="text-sm">{{ entityRecord.entity.entity_group }} > {{ entityRecord.entity.entity_category }}</div>
+        <div class="text-sm">{{ entityRecord.entity.entity_group }} > {{ entityRecord.entity.entity_categories }}</div>
         <div class="text-sm">{{ entityRecord.entity.building_part_occupied }}</div>
       </div>
     </ion-col>
@@ -33,7 +33,7 @@
       <hr/>
 
       <p>
-        <span class="font-bold"> GPS Location: </span>{{ entityRecord.location ? entityRecord.location.coordinates[0] + ', ' + entityRecord.location.coordinates[1]
+        <span class="font-bold"> GPS Location: </span>{{ entityRecord.location ? entityRecord.location.coordinates.latitude + ', ' + entityRecord.location.coordinates.longitude
         : 'Not Available' }}
       </p>
       
@@ -67,8 +67,6 @@
       <hr/>
       <p>
         <span class="font-bold">Has Signage: </span>{{ entityRecord.entity.has_signage ? 'Yes' : 'No' }}</p>
-      <p>
-        <span class="font-bold">Boy's Quarter: </span>{{ entityRecord.entity.boys_quarter }}</p>
       <hr/>
     </div>
   </div>

@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { StreetPhotoPage } from '../street-photo/street-photo';
-import { NewPropertyPage } from '../new-property/new-property';
-import { StreetPropertiesPage } from '../street-properties/street-properties';
 
 @IonicPage()
 @Component({
@@ -29,6 +26,13 @@ export class StreetPage {
       title: 'What do you want to do?',
       buttons: [
         {
+          text: 'Edit Street Data',
+          icon: 'create',
+          handler: () => {
+            this.navCtrl.push('EditStreetPage',{data: this.streetRecord});
+          }
+        },
+        {
           text: 'Upload Street Photo',
           icon: 'camera',
           handler: () => {
@@ -53,7 +57,7 @@ export class StreetPage {
   }
 
   addPhoto(){
-    this.navCtrl.push(StreetPhotoPage, { data: this.streetRecord.street.street_id })
+    this.navCtrl.push('StreetPhotoPage', { data: this.streetRecord.street.street_id })
   }
 
   openNewPropertyPage(streetRecord){
@@ -64,11 +68,11 @@ export class StreetPage {
       state: streetRecord.street.state,
       country: streetRecord.street.country
     };
-    this.navCtrl.push(NewPropertyPage, {data: payload});
+    this.navCtrl.push('NewPropertyPage', {data: payload});
   }
 
   openStreetPropertyPage(){
-    this.navCtrl.push(StreetPropertiesPage, { data: this.streetRecord.street.street_id });
+    this.navCtrl.push('StreetPropertiesPage', { data: this.streetRecord.street.street_id });
   }
 
 }

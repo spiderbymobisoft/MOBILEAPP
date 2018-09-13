@@ -17,9 +17,11 @@
     <div class="m-t-sm bg-white">
 
       <ion-item>
-        <ion-label floating>Building Serial Number</ion-label>
-        <ion-input [(ngModel)]="payload.property.building_serial_number" type="text"></ion-input>
-      </ion-item>
+          <ion-label floating>Building Serial Number</ion-label>
+          <ion-select [(ngModel)]="payload.property.building_serial_number" multiple="false">
+            <ion-option *ngFor="let data of bsnList" value="{{ data.bsn }}">{{ data.bsn }}</ion-option>
+          </ion-select>
+        </ion-item>
 
       <ion-item>
         <ion-label floating>Type of Owner</ion-label>
@@ -58,8 +60,8 @@
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Site Condition</ion-label>
-        <ion-select [(ngModel)]="payload.property.site_condition" multiple="true">
+        <ion-label floating>Site Conditions</ion-label>
+        <ion-select [(ngModel)]="payload.property.site_conditions" multiple="true">
           <ion-option *ngFor="let data of formConfig.siteCondition" value="{{ data.text }}">{{ data.text }}</ion-option>
         </ion-select>
       </ion-item>
@@ -107,18 +109,13 @@
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Number of Gate House(s)</ion-label>
-        <ion-input [(ngModel)]="payload.property.gate_house" type="number" name="gateHouse" id="gateHouse"></ion-input>
+        <ion-label floating>Gate House ID</ion-label>
+        <ion-input [(ngModel)]="payload.property.gate_house_id" type="text" name="gateHouse" id="gateHouse"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Number of Generator House(s)</ion-label>
-        <ion-input [(ngModel)]="payload.property.generator_house" type="number" name="generatorHouse" id="generatorHouse"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Number of Boy's Quarter(s)</ion-label>
-        <ion-input [(ngModel)]="payload.property.boys_quarter" type="number" name="bq" id="bq"></ion-input>
+        <ion-label floating>Generator House ID</ion-label>
+        <ion-input [(ngModel)]="payload.property.generator_house_id" type="text" name="generatorHouse" id="generatorHouse"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -134,6 +131,10 @@
         <ion-input [(ngModel)]="payload.property.number_of_entity" type="number" name="entities" id="entities"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <ion-label floating>Master Building Serial Number</ion-label>
+        <ion-input [(ngModel)]="payload.property.master_building_serial_number" type="text"></ion-input>
+      </ion-item>
     </div>
   </div>
 </ion-content>

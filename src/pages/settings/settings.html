@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>App Settings</ion-title>
+    <ion-buttons end>
+      <button color="white" ion-button icon-only (click)="updateSettings()">
+        <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item no-lines class="transparent">
+    <ion-label>Use SPiDER Cloud</ion-label>
+    <ion-toggle (ionChange)="useCloudChangeEvent($event)" name="use_cloud" id="use_cloud" [(ngModel)]="serverConfig.cloud"
+      checked="{{ serverConfig.cloud }}"></ion-toggle>
+  </ion-item>
+  <div *ngIf="!serverConfig.cloud">
+    <ion-item>
+      <ion-label floating>Local Server IP</ion-label>
+      <ion-input type="text" [(ngModel)]="serverConfig.ip"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Local Server Port</ion-label>
+      <ion-input type="tel" [(ngModel)]="serverConfig.port"></ion-input>
+    </ion-item>
+  </div>
+</ion-content>

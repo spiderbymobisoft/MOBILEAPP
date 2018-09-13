@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RetrieveService } from '../../app.services/http/crud/retrieve.services';
 import { SharedServices } from '../../app.services/library/shared.services';
-import { EntityPage } from '../entity/entity';
+
 
 @IonicPage()
 @Component({
@@ -46,7 +46,7 @@ export class EntitiesPage {
   }
 
   showThisRecord(entityRecord){
-    this.navCtrl.push(EntityPage, {data: entityRecord, sender: 'online'});
+    this.navCtrl.push('EntityPage', {data: entityRecord, sender: 'online'});
   }
 }
 

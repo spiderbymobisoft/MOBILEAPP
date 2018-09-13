@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { PropertyPhotoPage } from '../property-photo/property-photo';
-import { NewEntityPage } from '../new-entity/new-entity';
-import { EntitiesOfflinePage } from '../entities-offline/entities.offline';
 import { Store } from '../../app.services/store/data.store';
 
 @IonicPage()
@@ -21,13 +18,22 @@ export class PropertyOfflinePage {
   }
 
   ionViewDidLoad() {
-    this.offlinePhotos = this.store.GET_PROPERTY_PHOTOS(this.propertyRecord.property.property_id);
+    this.store.GET_PROPERTY_PHOTOS(this.propertyRecord.property.property_id).then(data=>{
+      this.offlinePhotos = data || [];
+    });
   }
 
   openMenuOption() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'What do you want to do?',
       buttons: [
+        {
+          text: 'Edit Property',
+          icon: 'create',
+          handler: () => {
+            this.navCtrl.push('EditPropertyOfflinePage',{data: this.propertyRecord});
+          }
+        },
         {
           text: 'Upload Property Photo',
           icon: 'camera',
@@ -53,15 +59,19 @@ export class PropertyOfflinePage {
   }
 
   addPhoto(){
-    this.navCtrl.push(PropertyPhotoPage, { data: this.propertyRecord.property.property_id });
+    this.navCtrl.push('PropertyPhotoPage', { data: this.propertyRecord.property.property_id });
   }
 
   openNewEntityPage(){
-    this.navCtrl.push(NewEntityPage, { data: this.propertyRecord.property.property_id });
+    this.navCtrl.push('NewEntityPage', 
+    { 
+      propertyId: this.propertyRecord.property.property_id, 
+      BSN: this.propertyRecord.property.building_serial_number 
+    });
   }
 
   openPropertyEntityPage(){
-    this.navCtrl.push(EntitiesOfflinePage, { data: this.propertyRecord.property.property_id });
+    this.navCtrl.push('EntitiesOfflinePage', { data: this.propertyRecord.property.property_id });
   }
 
 }

@@ -40,7 +40,7 @@
       </p>
       <hr/>
       <p>
-        <span class="font-bold"> GPS Location: </span>{{ propertyRecord.location ? propertyRecord.location.coordinates[0] + ', ' + propertyRecord.location.coordinates[1]
+        <span class="font-bold"> GPS Location: </span>{{ propertyRecord.location ? propertyRecord.location.coordinates.latitude + ', ' + propertyRecord.location.coordinates.longitude
         : 'Not Available' }}
       </p>
 
@@ -67,12 +67,11 @@
         </p>
 
       </div>
-      <div class="text-xxs text-black" *ngIf="propertyRecord.property.building_part_occupied">
-        <ion-icon name="home"></ion-icon>
-        {{ propertyRecord.property.building_part_occupied }}
+      <div *ngIf="propertyRecord.property.building_part_occupied">
+        <span class="font-bold">Part Occupied: </span> {{ propertyRecord.property.building_part_occupied }}
       </div>
 
-      <div *ngIf="propertyRecord.property.site_conditions > 0">
+      <div *ngIf="propertyRecord.property.site_conditions.length > 0">
         <hr/>
         <p class="font-bold">Site Conditions</p>
         <ul>
@@ -85,7 +84,7 @@
       <hr/>
 
       <p>
-        <span class="font-bold">Property Type: </span>{{ propertyRecord.property.property_type }}
+        <span class="font-bold">Property Type: </span>{{ propertyRecord.property.building_type }}
       </p>
       <p>
         <span class="font-bold">Storey Building: </span>{{ propertyRecord.property.storey_building ? 'Yes' : 'No' }}
@@ -102,13 +101,10 @@
         <span class="font-bold">Has Signage: </span>{{ propertyRecord.property.has_signage ? 'Yes' : 'No' }}
       </p>
       <p>
-        <span class="font-bold">Gate House: </span>{{ propertyRecord.property.gate_house }}
+        <span class="font-bold">Gate House ID: </span>{{ propertyRecord.property.gate_house_id }}
       </p>
       <p>
-        <span class="font-bold">Generator House: </span>{{ propertyRecord.property.generator_house }}
-      </p>
-      <p>
-        <span class="font-bold">Boy's Quarter: </span>{{ propertyRecord.property.boys_quarter }}
+        <span class="font-bold">Generator House ID: </span>{{ propertyRecord.property.generator_house_id }}
       </p>
 
       <hr/>
@@ -129,20 +125,10 @@
     <ion-card *ngFor="let photo of propertyRecord.property_photos">
       <img src="{{ photo.url ? photo.url : 'assets/icon/street.svg' }}" />
       <ion-card-content>
-        <ion-card-title>
-          {{ photo.title }}
-        </ion-card-title>
         <div class="m-t-sm m-b-sm">
           <div>
             <ion-icon name="ios-camera-outline" color="primary"></ion-icon>
             {{ photo.snapshot_position ? photo.snapshot_position : 'Not Available' }}
-          </div>
-          <div>
-            <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
-            {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
-          </div>
-          <div *ngIf="photo.location.whatthreewords">
-            <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
           </div>
         </div>
       </ion-card-content>

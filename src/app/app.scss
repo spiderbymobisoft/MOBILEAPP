@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +12,26 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.alert-ios .alert-radio-label {
+    white-space: pre-line;
+}
+
+.alert-md .alert-radio-label {
+    white-space: pre-line;
+}
+
+.alert-wp .alert-radio-label {
+    white-space: pre-line;
+}
+
+
+ion-select {
+    max-width: 100% !important;
+}
+
+ion-label {
+    max-width: 100% !important;
+    white-space: normal !important;
+}
+
+.select-text { white-space: pre-line;}

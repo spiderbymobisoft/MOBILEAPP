@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { PropertyPhotoPage } from '../property-photo/property-photo';
-import { NewEntityPage } from '../new-entity/new-entity';
-import { EntitiesPage } from '../entities/entities';
 
 @IonicPage()
 @Component({
@@ -24,6 +21,13 @@ export class PropertyPage {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'What do you want to do?',
       buttons: [
+        {
+          text: 'Edit Property Data',
+          icon: 'create',
+          handler: () => {
+            this.navCtrl.push('EditPropertyPage',{data: this.propertyRecord});
+          }
+        },
         {
           text: 'Upload Property Photo',
           icon: 'camera',
@@ -49,15 +53,19 @@ export class PropertyPage {
   }
 
   addPhoto(){
-    this.navCtrl.push(PropertyPhotoPage, { data: this.propertyRecord.property.property_id });
+    this.navCtrl.push('PropertyPhotoPage', { data: this.propertyRecord.property.property_id });
   }
 
   openNewEntityPage(){
-    this.navCtrl.push(NewEntityPage, { data: this.propertyRecord.property.property_id });
+    this.navCtrl.push('NewEntityPage', 
+    { 
+      propertyId: this.propertyRecord.property.property_id, 
+      BSN: this.propertyRecord.property.building_serial_number 
+    });
   }
 
   openPropertyEntityPage(){
-    this.navCtrl.push(EntitiesPage, { data: this.propertyRecord.property.property_id });
+    this.navCtrl.push('EntitiesPage', { data: this.propertyRecord.property.property_id });
   }
 
 }

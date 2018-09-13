@@ -22,7 +22,9 @@ export class SecurityPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private store: Store, private ss: SharedServices, private us: UpdateService) {
     this.loading = false;
-    this.user = store.GET_USER();
+    store.GET_USER().then(data=>{
+      this.user = data;
+    });
   }
 
   ionViewDidLoad() {
@@ -50,9 +52,10 @@ export class SecurityPage {
       if (data.success) {
         this.ss.dismissLoading();
         this.loading = false;
-        this.store.UPDATE_USER(data.result);
-        this.ss.swalAlert('Account Service', 'Update successfully', 'success');
-        this.navCtrl.pop();
+        this.store.UPDATE_USER(data.result).then(data=>{
+          this.ss.swalAlert('Account Service', 'Update successfully', 'success');
+          this.navCtrl.pop();
+        });
       } else {
         this.ss.dismissLoading();
         this.loading = false;
@@ -64,5 +67,4 @@ export class SecurityPage {
       this.ss.swalAlert('Account Service', 'Network connection error! Please try again.', 'error');
     });
   }
-
 }

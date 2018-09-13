@@ -34,7 +34,7 @@
       </p>
       <hr/>
       <p>
-        <span class="font-bold"> GPS Location: </span>{{ streetRecord.location ? streetRecord.location.coordinates[0] + ', ' + streetRecord.location.coordinates[1]
+        <span class="font-bold"> GPS Location: </span>{{ streetRecord.location ? streetRecord.location.coordinates.latitude + ', ' + streetRecord.location.coordinates.longitude
         : 'Not Available' }}
       </p>
       <p *ngIf="streetRecord.location.whatthreewords">
@@ -85,20 +85,10 @@
       <ion-card *ngFor="let photo of streetRecord.street_photos">
         <img src="{{ photo.url ? photo.url : 'assets/icon/street.svg' }}" />
         <ion-card-content>
-          <ion-card-title>
-            {{ photo.title }}
-          </ion-card-title>
           <div class="m-t-sm m-b-sm">
             <div>
               <ion-icon name="ios-camera-outline" color="primary"></ion-icon>
               {{ photo.snapshot_position ? photo.snapshot_position : 'Not Available' }}
-            </div>
-            <div>
-              <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
-              {{ photo.location.coordinates[0] }}, {{ photo.location.coordinates[1] }}
-            </div>
-            <div *ngIf="photo.location.whatthreewords">
-              <ion-icon name="ios-pin-outline" color="secondary"></ion-icon> {{ photo.location.whatthreewords }}
             </div>
           </div>
         </ion-card-content>

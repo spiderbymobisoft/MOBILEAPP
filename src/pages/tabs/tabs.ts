@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
 
-import { HomePage } from '../home/home';
-import { ProfilePage } from '../profile/profile';
-import { StreetsPage } from '../streets/streets';
-import { OfflinePage } from '../offline/offline';
-
+@IonicPage()
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = StreetsPage;
-  tab3Root = OfflinePage;
-  tab4Root = ProfilePage;
+  tab1Root = 'HomePage';
+  tab2Root = 'StreetsPage';
+  tab3Root = 'OfflinePage';
+  tab4Root = 'NotificationsPage';
+  tab5Root = 'ProfilePage';
 
 }

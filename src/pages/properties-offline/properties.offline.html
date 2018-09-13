@@ -32,7 +32,7 @@
       </div>
       <div *ngIf="propertyRecords.length > 0">
   
-        <ion-row (click)="showThisRecord(data)" class="wrapper-sm b-b b-light" *ngFor="let data of propertyRecords">
+        <ion-row (click)="showThisRecord(data, i)" class="wrapper-sm b-b b-light" *ngFor="let data of propertyRecords; let i = index">
           <ion-col col-auto>
             <ion-avatar item-start>
               <img class="thumb-sm" src="assets/icon/property.svg">
@@ -41,7 +41,7 @@
           <ion-col class="text-ellipsis-flex">
             <div class="l-h">
               <div class="{{ 'font-bold' }}">{{data.property.house_number}}, {{ data.property.street_name }}</div>
-              <div class="text-sm text-black text-ellipsis">{{ data.property.site_condition }}, {{ data.property.building_type }}</div>
+              <div class="text-sm text-black text-ellipsis">{{ data.property.site_conditions }}, {{ data.property.building_type }}</div>
               <div class="text-xxs text-black">
                 <ion-icon name="ios-pin-outline"></ion-icon>
                 {{ data.property.lga }}, {{ data.property.state }}
@@ -49,7 +49,7 @@
             </div>
           </ion-col>
           <ion-col text-right col-auto>
-            <div class="span text-xs text-muted m-t-xs">{{ data.entities }} {{ data.entities > 1 ? 'entities' : 'entity' }}</div>
+            <div class="span text-xs text-muted m-t-xs">{{ data.entities ? data.entities : 0 }} {{ data.entities > 1 ? 'entities' : 'entity' }}</div>
           </ion-col>
         </ion-row>
       </div>

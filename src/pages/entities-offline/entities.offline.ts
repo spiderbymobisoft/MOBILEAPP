@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Store } from '../../app.services/store/data.store';
-import { EntityOfflinePage } from '../entity-offline/entity.offline';
 
 @IonicPage()
 @Component({
@@ -28,12 +27,15 @@ export class EntitiesOfflinePage {
   }
 
   getEntityRecords() {
-    this.entityRecords = this.store.GET_PROPERTY_ENTITIES(this.propertyId);
-    this.entityRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+    this.store.GET_PROPERTY_ENTITIES(this.propertyId).then(data=>{
+      this.entityRecords = data || [];
+      this.entityRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+    });
+    
   }
 
-  showThisRecord(entityRecord){
-    this.navCtrl.push(EntityOfflinePage, {data: entityRecord});
+  showThisRecord(entityRecord: any, index: number){
+    this.navCtrl.push('EntityOfflinePage', {data: entityRecord, index: index});
   }
 }
 

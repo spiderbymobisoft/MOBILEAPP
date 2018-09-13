@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { StreetPhotoPage } from '../street-photo/street-photo';
-import { NewPropertyPage } from '../new-property/new-property';
-import { StreetPropertiesOfflinePage } from '../street-properties-offline/street.properties.offline';
 import { Store } from '../../app.services/store/data.store';
 
 @IonicPage()
@@ -21,13 +18,22 @@ export class StreetOfflinePage {
   }
 
   ionViewDidLoad() {
-    this.offlinePhotos = this.store.GET_STREET_PHOTOS(this.streetRecord.street.street_id);
+    this.store.GET_STREET_PHOTOS(this.streetRecord.street.street_id).then(data=>{
+      this.offlinePhotos = data || [];
+    });
   }
 
   openMenuOption() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'What do you want to do?',
       buttons: [
+        {
+          text: 'Edit Street',
+          icon: 'create',
+          handler: () => {
+            this.navCtrl.push('EditStreetOfflinePage',{data: this.streetRecord});
+          }
+        },
         {
           text: 'Upload Street Photo',
           icon: 'camera',
@@ -53,7 +59,7 @@ export class StreetOfflinePage {
   }
 
   addPhoto() {
-    this.navCtrl.push(StreetPhotoPage, { data: this.streetRecord.street.street_id })
+    this.navCtrl.push('StreetPhotoPage', { data: this.streetRecord.street.street_id })
   }
 
   openNewPropertyPage(streetRecord) {
@@ -64,11 +70,11 @@ export class StreetOfflinePage {
       state: streetRecord.street.state,
       country: streetRecord.street.country
     };
-    this.navCtrl.push(NewPropertyPage, { data: payload });
+    this.navCtrl.push('NewPropertyPage', { data: payload });
   }
 
   openStreetPropertyPage() {
-    this.navCtrl.push(StreetPropertiesOfflinePage, { data: this.streetRecord.street.street_id });
+    this.navCtrl.push('StreetPropertiesOfflinePage', { data: this.streetRecord.street.street_id });
   }
 
 }

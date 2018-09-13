@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Store } from '../../app.services/store/data.store';
-import { PropertyOfflinePage } from '../property-offline/property.offline';
 
 @IonicPage()
 @Component({
@@ -28,11 +27,14 @@ export class StreetPropertiesOfflinePage {
   }
 
   getPropertyRecords() {
-    this.propertyRecords = this.store.GET_STREET_PROPERTIES(this.streetId);
-    this.propertyRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+    this.store.GET_STREET_PROPERTIES(this.streetId).then(data=>{
+      this.propertyRecords = data || [];
+      this.propertyRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+    });
+    
   }
 
-  showThisRecord(propertyRecord){
-    this.navCtrl.push(PropertyOfflinePage, {data: propertyRecord})
+  showThisRecord(propertyRecord: any, index: number){
+    this.navCtrl.push('PropertyOfflinePage', {data: propertyRecord, index: index});
   }
 }

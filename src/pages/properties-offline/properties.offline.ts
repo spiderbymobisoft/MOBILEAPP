@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SelectStreetPage } from '../select-street/select-street';
-import { PropertyOfflinePage } from '../property-offline/property.offline';
 import { Store } from '../../app.services/store/data.store';
 
 
@@ -35,8 +33,11 @@ export class PropertiesOfflinePage {
   }
 
   loadContent() {
-   this.propertyRecords = this.store.GET_RECORD('__properties__');
-   this.propertyRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+   this.store.GET_RECORD('__properties__').then(data=>{
+    this.propertyRecords = data || [];
+    this.propertyRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+   });
+   
   }
 
 
@@ -49,12 +50,11 @@ export class PropertiesOfflinePage {
   }
 
 
-
   add() {
-    this.navCtrl.push(SelectStreetPage);
+    this.navCtrl.push('SelectStreetPage');
   }
 
-  showThisRecord(propertyRecord){
-    this.navCtrl.push(PropertyOfflinePage, {data: propertyRecord});
+  showThisRecord(propertyRecord: any, index: number){
+    this.navCtrl.push('PropertyOfflinePage', {data: propertyRecord, index: index});
   }
 }

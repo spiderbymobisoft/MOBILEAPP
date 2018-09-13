@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RetrieveService } from '../../app.services/http/crud/retrieve.services';
 import { SharedServices } from '../../app.services/library/shared.services';
-import { PropertyPage } from '../property/property';
 
 @IonicPage()
 @Component({
@@ -46,6 +45,6 @@ export class StreetPropertiesPage {
   }
 
   showThisRecord(propertyRecord){
-    this.navCtrl.push(PropertyPage, {data: propertyRecord})
+    this.navCtrl.push('PropertyPage', {data: propertyRecord})
   }
 }

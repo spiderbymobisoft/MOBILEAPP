@@ -31,7 +31,7 @@
       </div>
     </div>
     <div *ngIf="streetRecords.length > 0">
-      <ion-row (click)="showThisRecord(data)" class="wrapper-sm b-b b-light" *ngFor="let data of streetRecords">
+      <ion-row (click)="showThisRecord(data, i)" class="wrapper-sm b-b b-light" *ngFor="let data of streetRecords; let i = index">
         <ion-col col-auto>
           <ion-avatar item-start>
             <img class="thumb-sm" src="assets/icon/street.svg">

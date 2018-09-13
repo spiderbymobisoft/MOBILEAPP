@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RetrieveService } from '../../app.services/http/crud/retrieve.services';
 import { Store } from '../../app.services/store/data.store';
 import { SharedServices } from '../../app.services/library/shared.services';
-import { PropertyPage } from '../property/property';
-import { SelectStreetPage } from '../select-street/select-street';
 
 
 
@@ -153,10 +151,10 @@ export class PropertiesPage {
   }
 
   add() {
-    this.navCtrl.push(SelectStreetPage);
+    this.navCtrl.push('SelectStreetPage');
   }
 
   showThisRecord(propertyRecord){
-    this.navCtrl.push(PropertyPage, {data: propertyRecord, sender: 'online'});
+    this.navCtrl.push('PropertyPage', {data: propertyRecord, sender: 'online'});
   }
 }

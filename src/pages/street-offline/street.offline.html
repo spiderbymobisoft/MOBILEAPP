@@ -34,7 +34,7 @@
       </p>
       <hr/>
       <p>
-        <span class="font-bold"> GPS Location: </span>{{ streetRecord.location ? streetRecord.location.coordinates[0] + ', ' + streetRecord.location.coordinates[1]
+        <span class="font-bold"> GPS Location: </span>{{ streetRecord.location ? streetRecord.location.coordinates.latitude + ', ' + streetRecord.location.coordinates.longitude
         : 'Not Available' }}
       </p>
       <p *ngIf="streetRecord.location.whatthreewords">

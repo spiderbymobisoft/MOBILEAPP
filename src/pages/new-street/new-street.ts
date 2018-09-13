@@ -5,7 +5,6 @@ import { Store } from '../../app.services/store/data.store';
 import { SharedServices } from '../../app.services/library/shared.services';
 import { NigeriaStatesService } from '../../app.services/locations/nigeria.states.service';
 import { FormConfig } from '../../app.services/store/form.config';
-import { StreetPhotoPage } from '../street-photo/street-photo';
 
 @IonicPage()
 @Component({
@@ -37,7 +36,10 @@ export class NewStreetPage {
     },
     location: {
       type: 'Point',
-      coordinates: [],
+      coordinates: {
+        latitude: 0,
+        longitude: 0
+      },
       whatthreewords: ''
     },
     street_photos: [],
@@ -47,7 +49,8 @@ export class NewStreetPage {
       lastname: '',
       email: '',
       telephone: ''
-    }
+    },
+    signature: ''
   }
 
   public nigeriaStates: any[] = [];
@@ -61,8 +64,11 @@ export class NewStreetPage {
   }
 
   dataInit(){
-    this.user = this.store.GET_USER();
-    this.payload.record_id = this.ss.GENERATE_RECORD_ID();
+    this.store.GET_USER().then(data=>{
+      this.user = data;
+      this.payload.record_id = this.ss.GENERATE_RECORD_ID();
+    });
+   
   }
 
   ionViewDidLoad() {
@@ -92,51 +98,40 @@ export class NewStreetPage {
     });
   }
 
+  isFormValid(): boolean {
+    if(
+      !this.payload.street.street_name || 
+      !this.payload.street.area || 
+      !this.payload.street.location || 
+      !this.payload.street.lga || 
+      !this.payload.street.state ||
+      !this.payload.street.road_type ||
+      this.payload.street.street_furniture.length === 0 ||
+      !this.payload.street.road_condition ||
+      !this.payload.street.road_carriage ||
+      this.payload.street.road_feature.length === 0 ||
+      !this.payload.street.refuse_disposal ||
+      !this.payload.street.drainage ||
+      !this.payload.street.electricity
+    ){
+      return false
+    }else{
+      return true
+    }
+  }
+
   save() {
-    if (!this.payload.street.street_name || !this.payload.street.area || !this.payload.street.location || !this.payload.street.lga || !this.payload.street.state) {
+    if (!this.isFormValid()) {
       this.ss.swalAlert('Data Service', 'All fields are required. Please try again', 'error');
     } else {
       this.processSave();
     }
 
   }
-  /* 
-    processSave() {
-      this.ss.presentLoading();
-      this.payload.street.street_id = this.ss.GENERATE_STREET_ID();
-      this.payload.enumerator = {
-        id: this.user._id,
-        firstname: this.user.personal.firstname,
-        lastname: this.user.personal.lastname,
-        email: this.user.personal.email,
-        mobile: this.user.personal.mobile
-      };
-      this.geolocation.getCurrentPosition({ timeout: 30000, enableHighAccuracy: true }).then((position) => {
-        this.ss.toast('Location captured', 2000);
-        this.payload.location.coordinates = [position.coords.longitude, position.coords.latitude];
-        this.cs.addNewStreet(this.payload).then(payload => {
-          if (payload['success']) {
-            this.ss.dismissLoading();
-            this.ss.swalAlert('Data Service', 'Record added successfully. <br><b>Next</b>: Add street photo', 'success');
-            this.navCtrl.pop().then(() => {
-              this.navCtrl.push(StreetPhotoPage, { data: this.payload.street.street_id });
-            });
-          } else {
-            this.ss.dismissLoading();
-            this.ss.swalAlert('Data Service', 'Network connection error! Please try again.', 'error');
-          }
-        }).catch(err => {
-          this.ss.dismissLoading();
-          this.ss.swalAlert('Data Service', 'Network connection error! Please try again.', 'error');
-        });
-      }).catch(err => {
-        this.ss.dismissLoading();
-        this.ss.toast('Unable to capture device current location. Pleas turn on device location access', 3000);
-      });
-    } */
 
   processSave() {
     this.ss.presentLoading();
+    this.payload.signature = this.ss.GENERATE_SIGNATURE;
     this.payload.street.street_id = this.ss.GENERATE_STREET_ID();
     if(this.payload.street.gis_id === ''){
       this.payload.street.gis_id = this.ss.GENERATE_GIS_ID();
@@ -151,14 +146,14 @@ export class NewStreetPage {
     };
     this.geolocation.getCurrentPosition({ timeout: 30000, enableHighAccuracy: true }).then((position) => {
       this.ss.toast('Location captured', 2000);
-      this.payload.location.coordinates = [position.coords.longitude, position.coords.latitude];
+      this.payload.location.coordinates = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       
       this.store.UPDATE_RECORD('__streets__',this.payload).then(feedback => {
         if (feedback) {
           this.ss.dismissLoading();
           this.ss.swalAlert('Data Service', 'Record stored successfully. <br><b>Next</b>: Add street photo', 'success');
           this.navCtrl.pop().then(() => {
-            this.navCtrl.push(StreetPhotoPage, { data: this.payload.street.street_id });
+            this.navCtrl.push('StreetPhotoPage', { data: this.payload.street.street_id });
           });
         } else {
           this.ss.dismissLoading();

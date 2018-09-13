@@ -13,7 +13,7 @@
   <div padding style="text-align: center; margin-top: 60px" *ngIf="menuItems.length === 0">
     <ion-spinner color="primary"></ion-spinner>
   </div>
-  <ion-row text-center>
+  <ion-row text-center *ngIf="render">
     <ion-col (click)="openThis(menu)" col-6 *ngFor="let menu of menuItems" class="b-r b-b b-light">
       <div class="wrapper-sm pos-rlt">
         <!--  <ion-icon name="md-create" class="pos-abt top right"></ion-icon> -->

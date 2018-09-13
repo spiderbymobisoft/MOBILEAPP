@@ -5,8 +5,6 @@ import { SharedServices } from '../../app.services/library/shared.services';
 import { Store } from '../../app.services/store/data.store';
 import { AuthenticationService } from '../../app.services/http/authentication/auth.service';
 import { UpdateService } from '../../app.services/http/crud/update.services';
-import { SecurityPage } from '../security/security';
-import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -18,11 +16,11 @@ export class ProfilePage {
   public user: any;
   private _base64Image: any;
   public avatar: string;
-  private renderProfile: boolean  = false;
+  private renderProfile: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private us: UpdateService,
     private actionSheetCtrl: ActionSheetController, private ss: SharedServices, private camera: Camera,
     private store: Store, private auth: AuthenticationService) {
- 
+
   }
 
   ionViewDidLoad() {
@@ -30,20 +28,23 @@ export class ProfilePage {
 
   ionViewWillEnter() {
 
-    if(this.auth.isAuthenticated()){
+    if (this.auth.isAuthenticated()) {
       this.dataInit();
-    }else{
-      this.navCtrl.setRoot(LoginPage);
+    } else {
+      this.navCtrl.setRoot('LoginPage');
     }
-    
+
   }
 
   dataInit() {
-    this.user = this.store.GET_USER();
-    this.avatar = this.user.personal.avatar;
-    setTimeout(() => {
-      this.renderProfile = true;
-    }, 1000);
+    this.store.GET_USER().then(data => {
+      this.user = data;
+      this.avatar = this.user.personal.avatar;
+      setTimeout(() => {
+        this.renderProfile = true;
+      }, 1000);
+    });
+
   }
 
 
@@ -132,13 +133,13 @@ export class ProfilePage {
   }
 
   openChangePassword() {
-    this.navCtrl.push(SecurityPage);
+    this.navCtrl.push('SecurityPage');
   }
 
   logOut() {
-    this.auth.logout().then(response=>{
-      if(response){
-        this.navCtrl.parent.parent.setRoot(LoginPage);
+    this.auth.logout().then(response => {
+      if (response) {
+        this.navCtrl.parent.parent.setRoot('LoginPage');
       }
     });
   }

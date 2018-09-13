@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { EntityPhotoPage } from '../entity-photo/entity-photo';
 import { Store } from '../../app.services/store/data.store';
 
 @IonicPage()
@@ -19,13 +18,22 @@ export class EntityOfflinePage {
   }
 
   ionViewDidLoad() {
-    this.offlinePhotos = this.store.GET_ENTITY_PHOTOS(this.entityRecord.entity.entity_id);
+    this.store.GET_ENTITY_PHOTOS(this.entityRecord.entity.entity_id).then(data=>{
+      this.offlinePhotos = data || [];
+    });
   }
 
   openMenuOption() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'What do you want to do?',
       buttons: [
+        {
+          text: 'Edit Property Entity',
+          icon: 'create',
+          handler: () => {
+            this.navCtrl.push('EditEntityOfflinePage',{data: this.entityRecord});
+          }
+        },
         {
           text: 'Upload Property Entity Photo',
           icon: 'camera',
@@ -45,7 +53,7 @@ export class EntityOfflinePage {
   }
 
   addPhoto(){
-    this.navCtrl.push(EntityPhotoPage, { data: this.entityRecord.property_id });
+    this.navCtrl.push('EntityPhotoPage', { data: this.entityRecord.property_id });
   }
 
 

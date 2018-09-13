@@ -1,13 +1,19 @@
-
 <ion-header>
-
-  <ion-navbar color="primary" no-border-bottom>
-    <ion-title>Support</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
+    <ion-navbar color="primary">
+      <ion-title>Support Request</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="save()">
+          <ion-icon name="checkmark"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+<ion-content #content class="content-noscroll">
+  <div *ngIf="renderContent" class="wrapper-sm post-new h-full">
+    <ion-row class="h-full">
+      <ion-col class="scroll-y">
+        <ion-textarea [(ngModel)]="payload.message" name="story" fz-elastic placeholder="Click here to start typing your support request."></ion-textarea>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

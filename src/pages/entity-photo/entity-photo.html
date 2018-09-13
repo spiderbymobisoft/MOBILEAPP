@@ -14,10 +14,6 @@
     <div class="bg-white m-b-sm">
       <div class="m-t-sm bg-white">
         <ion-item>
-          <ion-label floating>Photo Description</ion-label>
-          <ion-input [(ngModel)]="payload.title" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
           <ion-label>Property Position</ion-label>
           <ion-select [(ngModel)]="payload.snapshot_position" name="property_position" id="property_position">
             <ion-option value="Front of Property">Front of Property</ion-option>
@@ -28,11 +24,6 @@
         </ion-item>
         <ion-card *ngIf="payload.photo" class="posts">
           <img src="{{ payload.photo ? payload.photo : 'assets/icon/property.svg' }}" width="100%" />
-          <ion-card-content>
-            <p>
-              {{ payload.title }}
-            </p>
-          </ion-card-content>
         </ion-card>
       </div>
     </div>

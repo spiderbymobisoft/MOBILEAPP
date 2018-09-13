@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { EntityPhotoPage } from '../entity-photo/entity-photo';
 
 @IonicPage()
 @Component({
@@ -26,6 +25,13 @@ export class EntityPage {
       title: 'What do you want to do?',
       buttons: [
         {
+          text: 'Edit Entity Data',
+          icon: 'create',
+          handler: () => {
+            this.navCtrl.push('EditEntityPage',{data: this.entityRecord});
+          }
+        },
+        {
           text: 'Upload Property Entity Photo',
           icon: 'camera',
           handler: () => {
@@ -44,7 +50,11 @@ export class EntityPage {
   }
 
   addPhoto(){
-    this.navCtrl.push(EntityPhotoPage, { data: this.entityRecord.entity.entity_id });
+    this.navCtrl.push('EntityPhotoPage', { 
+      entity: this.entityRecord.entity.entity_id, 
+      property: this.entityRecord.property_id, 
+      BSN: this.entityRecord.building_serial_number 
+    });
   }
 
 

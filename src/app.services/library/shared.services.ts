@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ToastController, LoadingController } from 'ionic-angular';
-
 import 'rxjs/add/operator/map';
 
 declare let swal: any;
@@ -9,7 +8,8 @@ declare let swal: any;
 export class SharedServices {
 
   private loader: any;
-  constructor(private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(private toastCtrl: ToastController,
+    public loadingCtrl: LoadingController) {
 
   }
 
@@ -47,6 +47,17 @@ export class SharedServices {
     this.loader.dismiss();
   }
 
+  get GENERATE_SIGNATURE(){
+    const now = new Date().getTime();
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let text='SIGN-' + now + '-';
+    let len = 16;
+    for( let i=0; i < len; i++ )
+        text += charset.charAt(Math.floor(Math.random() * charset.length));
+    return text;
+  }
+
+  
   GENERATE_RECORD_ID(){
     const now = new Date().getTime();
     const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

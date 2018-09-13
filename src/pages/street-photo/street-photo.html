@@ -14,10 +14,6 @@
   <div class="bg-white m-b-sm">
     <div class="m-t-sm bg-white">
       <ion-item>
-        <ion-label floating>Photo Description</ion-label>
-        <ion-input [(ngModel)]="payload.title" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
         <ion-label>Street Position</ion-label>
         <ion-select [(ngModel)]="payload.snapshot_position" name="street_position" id="street_position">
           <ion-option value="Start of Street">Start of Street</ion-option>
@@ -27,11 +23,6 @@
       </ion-item>
       <ion-card *ngIf="payload.photo" class="posts">
         <img src="{{ payload.photo ? payload.photo : 'assets/icon/street.svg' }}" width="100%" />
-        <ion-card-content>
-          <p>
-            {{ payload.title }}
-          </p>
-        </ion-card-content>
       </ion-card>
     </div>
   </div>

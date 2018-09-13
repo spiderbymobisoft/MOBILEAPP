@@ -11,16 +11,16 @@ import { Events } from 'ionic-angular/util/events';
 @Injectable()
 export class DeleteService{
 
-    private appConfig : any;
     private authorization : string;
     private url : string;
     private headers: Headers;
     private options: RequestOptions;
    
     constructor(public http: Http, public config : APIConfig, private events: Events) {
-        this.appConfig = config.getConfig();
-        this.url = this.appConfig.apiURL;
-        this.authorization = this.appConfig.authorization;
+        config.getSavedSettings().then(settings => {
+            settings['cloud'] ? this.url = config.apiConfig.remoteURL : this.url = config.apiConfig.apiURL;
+            this.authorization = config.apiConfig.authorization;
+        });
         this.headers = new Headers({ 'Content-Type': 'application/json', 
                                     'Accept': 'q=0.8;application/json;q=0.9'
                                 });

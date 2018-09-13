@@ -10,18 +10,18 @@ import { APIConfig } from '../../apiconfig/api.config';
 @Injectable()
 export class UpdateService{
 
-    private appConfig : any;
     private authorization : string;
     private url : string;
-    private _url : string;
+    private remote : string;
     private headers: Headers;
     private options: RequestOptions;
    
     constructor(private http: Http, config : APIConfig) {
-        this.appConfig = config.getConfig();
-        this.url = this.appConfig.apiURL;
-        this._url = this.appConfig.msgURL;
-        this.authorization = this.appConfig.authorization;
+        config.getSavedSettings().then(settings => {
+            settings['cloud'] ? this.url = config.apiConfig.remoteURL : this.url = config.apiConfig.apiURL;
+            this.remote = config.apiConfig.remoteURL;
+            this.authorization = config.apiConfig.authorization;
+        });
         this.headers = new Headers({ 'Content-Type': 'application/json', 
                                     'Accept': 'q=0.8;application/json;q=0.9'
                                 });
@@ -33,7 +33,7 @@ export class UpdateService{
     updateUserAvatar(payload): Observable<any> {
         let body = JSON.stringify(payload);
         return this.http
-            .patch(this.url+'user/avatar', body, this.options)
+            .patch(this.remote+'user/avatar', body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -66,7 +66,7 @@ export class UpdateService{
     updatePlayerId(payload): Observable<any> {
         let body = JSON.stringify(payload);
         return this.http
-            .patch(this.url+'user/onesignal', body, this.options)
+            .patch(this.remote+'user/onesignal', body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -74,10 +74,46 @@ export class UpdateService{
     updateSecurity(security): Observable<any> {
         let body = JSON.stringify(security);
         return this.http
-            .patch(this.url+'user/security', body, this.options)
+            .patch(this.remote+'user/security', body, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
+
+    updateStreet(payload): Observable<any> {
+        let body = JSON.stringify(payload);
+        return this.http
+            .patch(this.url + 'street', body, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    updateProperty(payload): Observable<any> {
+        let body = JSON.stringify(payload);
+        return this.http
+            .patch(this.url + 'property', body, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    updateEntity(payload): Observable<any> {
+
+        let body = JSON.stringify(payload);
+        return this.http
+            .patch(this.url + 'entity', body, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+
+    updateNotificationReadStatus(payload): Observable<any> {
+        let body = JSON.stringify(payload);
+        console.log(this.url);
+        return this.http
+            .patch(this.url + 'notification/read', body, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
 
 
     private extractData(res: Response) {

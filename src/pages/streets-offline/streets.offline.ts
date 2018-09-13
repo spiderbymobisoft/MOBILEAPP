@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Store } from '../../app.services/store/data.store';
-import { NewStreetPage } from '../new-street/new-street';
-import { StreetOfflinePage } from '../street-offline/street.offline';
 
 @IonicPage()
 @Component({
@@ -26,15 +24,21 @@ export class StreetsOfflinePage {
   }
 
   dataInit() {
-    this.user = this.store.GET_USER();
-    setTimeout(() => {
-      this.loadContent();
-    }, 500);
+    this.store.GET_USER().then(data=>{
+      this.user = data;
+      setTimeout(() => {
+        this.loadContent();
+      }, 500);
+    });
+    
   }
 
   loadContent() {
-    this.streetRecords = this.store.GET_RECORD('__streets__');
-    this.streetRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+    this.store.GET_RECORD('__streets__').then(data=>{
+      this.streetRecords = data || [];
+      this.streetRecords.length == 0 ? this.isBlankPost = 1 : this.isBlankPost = 0;
+    });
+    
   }
 
 
@@ -48,11 +52,11 @@ export class StreetsOfflinePage {
 
 
   add() {
-    this.navCtrl.push(NewStreetPage);
+    this.navCtrl.push('NewStreetPage');
   }
 
-  showThisRecord(streetRecord) {
-    this.navCtrl.push(StreetOfflinePage, { data: streetRecord })
+  showThisRecord(streetRecord: any, index: number) {
+    this.navCtrl.push('StreetOfflinePage', { data: streetRecord, index: index });
   }
 
 }

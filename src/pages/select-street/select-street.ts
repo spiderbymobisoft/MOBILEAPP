@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RetrieveService } from '../../app.services/http/crud/retrieve.services';
 import { Store } from '../../app.services/store/data.store';
 import { SharedServices } from '../../app.services/library/shared.services';
-import { NewPropertyPage } from '../new-property/new-property';
 
 @IonicPage()
 @Component({
@@ -133,6 +132,6 @@ export class SelectStreetPage {
       state: streetRecord.street.state,
       country: streetRecord.street.country
     };
-    this.navCtrl.push(NewPropertyPage, {data: payload})
+    this.navCtrl.push('NewPropertyPage', {data: payload})
   }
 }

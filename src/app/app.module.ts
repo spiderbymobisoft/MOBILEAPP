@@ -4,17 +4,8 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Keyboard } from '@ionic-native/keyboard';
 import { HttpModule } from '@angular/http';
-import { ComponentsModule } from '../components/components.module';
-import { ElasticModule } from 'ng-elastic';
-import { DirectivesModule } from '../directives/directives.module';
-import { MomentModule } from 'angular2-moment';
 import { Geolocation } from '@ionic-native/geolocation';
-
-import { TabsPage } from '../pages/tabs/tabs';
-import { LoginPage } from '../pages/login/login';
-import { MenuPage } from '../pages/menu/menu';
-import { HomePage } from '../pages/home/home';
-import { ProfilePage } from '../pages/profile/profile';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -30,80 +21,25 @@ import { AuthenticationService } from '../app.services/http/authentication/auth.
 import { Camera } from '@ionic-native/camera';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { FlurryAnalytics } from '@ionic-native/flurry-analytics';
-import { StreetsPage } from '../pages/streets/streets';
-import { NewStreetPage } from '../pages/new-street/new-street';
-import { PropertiesPage } from '../pages/properties/properties';
-import { NewPropertyPage } from '../pages/new-property/new-property';
-import { SecurityPage } from '../pages/security/security';
-import { SupportPage } from '../pages/support/support';
 import { FormConfig } from '../app.services/store/form.config';
-import { StreetPage } from '../pages/street/street';
-import { PropertyPage } from '../pages/property/property';
-import { PropertyPhotoPage } from '../pages/property-photo/property-photo';
-import { StreetPhotoPage } from '../pages/street-photo/street-photo';
 import { WhatThreeWordsService } from '../app.services/wtw/wtw.service';
-import { EntityPage } from '../pages/entity/entity';
-import { EntitiesPage } from '../pages/entities/entities';
-import { NewEntityPage } from '../pages/new-entity/new-entity';
-import { EntityPhotoPage } from '../pages/entity-photo/entity-photo';
-import { SelectStreetPage } from '../pages/select-street/select-street';
-import { StreetPropertiesPage } from '../pages/street-properties/street-properties';
-import { StreetsOfflinePage } from '../pages/streets-offline/streets.offline';
-import { StreetPropertiesOfflinePage } from '../pages/street-properties-offline/street.properties.offline';
-import { PropertiesOfflinePage } from '../pages/properties-offline/properties.offline';
-import { EntitiesOfflinePage } from '../pages/entities-offline/entities.offline';
-import { StreetOfflinePage } from '../pages/street-offline/street.offline';
-import { EntityOfflinePage } from '../pages/entity-offline/entity.offline';
-import { PropertyOfflinePage } from '../pages/property-offline/property.offline';
-import { OfflinePage } from '../pages/offline/offline';
-import { EntitiesOfflineAllPage } from '../pages/entities-offline-all/entities.offline.all';
+import { Device } from '@ionic-native/device';
+import { OneSignal } from '@ionic-native/onesignal';
+import { BSNStore } from '../app.services/store/bsn.store';
 
 const __app_components__: any[] = [
-  MyApp,
-  TabsPage,
-  LoginPage,
-  MenuPage,
-  HomePage,
-  ProfilePage,
-  StreetsPage,
-  StreetsOfflinePage,
-  StreetPropertiesOfflinePage,
-  PropertiesOfflinePage,
-  EntitiesOfflinePage,
-  StreetOfflinePage,
-  EntityOfflinePage,
-  PropertyOfflinePage,
-  NewStreetPage,
-  PropertiesPage,
-  NewPropertyPage,
-  SecurityPage,
-  SupportPage,
-  StreetPage,
-  StreetPhotoPage,
-  PropertyPage,
-  PropertyPhotoPage,
-  EntityPage,
-  EntitiesPage,
-  NewEntityPage,
-  EntityPhotoPage,
-  SelectStreetPage,
-  StreetPropertiesPage,
-  OfflinePage,
-  EntitiesOfflineAllPage
+  MyApp
 ];
 @NgModule({
-  declarations: __app_components__,
+  declarations: [...__app_components__],
   imports: [
     BrowserModule,
     HttpModule,
-    ComponentsModule,
-    DirectivesModule,
-    ElasticModule,
-    MomentModule,
     IonicModule.forRoot(MyApp, {
       mode: 'md',// TODO: to have same iOS look for iOS platforms
       backButtonText: ''
-    })
+    }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: __app_components__
@@ -117,13 +53,13 @@ const __app_components__: any[] = [
     DeleteService,
     NigeriaStatesService,
     SharedServices,
-    Store,
+    Store, BSNStore,
     FormConfig,
     StatusBar,
     SplashScreen,
     Keyboard,
-    Geolocation, WhatThreeWordsService,
-    ScreenOrientation, Camera, FlurryAnalytics, 
+    Geolocation, WhatThreeWordsService, Device,
+    ScreenOrientation, Camera, FlurryAnalytics, OneSignal,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

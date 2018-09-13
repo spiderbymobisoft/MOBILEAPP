@@ -1,0 +1,138 @@
+<ion-header>
+
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-title>Edit Property</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="bg-white m-b-sm">
+    <div class="m-t-sm bg-white">
+
+      <ion-item>
+        <ion-label floating>Building Serial Number</ion-label>
+        <ion-input [(ngModel)]="payload.property.building_serial_number" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Type of Owner</ion-label>
+        <ion-select [(ngModel)]="payload.property.ownership_type" multiple="false">
+          <ion-option *ngFor="let data of formConfig.typeOfOwner" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Building Part Occupied</ion-label>
+        <ion-select [(ngModel)]="payload.property.building_part_occupied" multiple="false">
+          <ion-option value="Whole Building">Whole Building</ion-option>
+          <ion-option value="Part of Building">Part of Building</ion-option>
+          <ion-option value="Not Applicable">Not Applicable</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Contact Person</ion-label>
+        <ion-input [(ngModel)]="payload.contact.contact_person" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input [(ngModel)]="payload.contact.email" type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Telephone</ion-label>
+        <ion-input [(ngModel)]="payload.contact.telephone" type="tel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>House Number</ion-label>
+        <ion-input [(ngModel)]="payload.property.house_number" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Site Conditions</ion-label>
+        <ion-select [(ngModel)]="payload.property.site_conditions" multiple="true">
+          <ion-option *ngFor="let data of formConfig.siteCondition" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Building Type</ion-label>
+        <ion-select [(ngModel)]="payload.property.building_type" multiple="false">
+          <ion-option *ngFor="let data of formConfig.buildingType" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Is property a Storey Building?</ion-label>
+        <ion-select [(ngModel)]="payload.property.storey_building" multiple="false">
+          <ion-option value="true">Yes</ion-option>
+          <ion-option value="false">No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Number of Floors</ion-label>
+        <ion-input [(ngModel)]="payload.property.storey_building_floors" type="number" name="floors" id="floors"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Water Supply</ion-label>
+        <ion-select [(ngModel)]="payload.property.water_supply" multiple="true">
+          <ion-option *ngFor="let data of formConfig.waterSupply" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Refuse Disposal</ion-label>
+        <ion-select [(ngModel)]="payload.property.refuse_disposal" multiple="false">
+          <ion-option *ngFor="let data of formConfig.refuseDisposal" value="{{ data.text }}">{{ data.text }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Has Signage</ion-label>
+        <ion-select [(ngModel)]="payload.property.has_signage" multiple="false">
+          <ion-option value="true">Yes</ion-option>
+          <ion-option value="false">No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Gate House ID</ion-label>
+        <ion-input [(ngModel)]="payload.property.gate_house_id" type="text" name="gateHouse" id="gateHouse"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Generator House ID</ion-label>
+        <ion-input [(ngModel)]="payload.property.generator_house_id" type="text" name="generatorHouse" id="generatorHouse"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Is Property Accessible?</ion-label>
+        <ion-select [(ngModel)]="payload.property.accessible" multiple="false">
+          <ion-option value="true">Yes</ion-option>
+          <ion-option value="false">No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Number of Entities</ion-label>
+        <ion-input [(ngModel)]="payload.property.number_of_entity" type="number" name="entities" id="entities"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Master Building Serial Number</ion-label>
+        <ion-input [(ngModel)]="payload.property.master_building_serial_number" type="text"></ion-input>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>
